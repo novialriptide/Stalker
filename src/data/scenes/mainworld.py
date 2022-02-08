@@ -16,7 +16,7 @@ class MainWorld(Scene):
         self.light_collisions = []
 
         self.g = GameMap(
-            "C:/Users/novia/Documents/GitHub/Stay-Alert/src/data/tilemaps/house.tmx"
+            "data/tilemaps/house.tmx"
         )
 
         for r in self.g.collision_rects:
