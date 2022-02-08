@@ -55,3 +55,5 @@ class MainWorld(Scene):
             screen_size.x / 2 - map_surf_size.x / 2,
             screen_size.y / 2 - map_surf_size.y / 2,
         )
+        
+        self.advance_frame()
