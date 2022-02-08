@@ -6,7 +6,7 @@ from SakuyaEngine.scene import SceneManager
 
 client = Client(
     f"Stay Alert",
-    pygame.Vector2(256 * 1.5, 224 * 1.5),
+    pygame.Vector2(128, 112),
 )
 
 pygame.mixer.init()
