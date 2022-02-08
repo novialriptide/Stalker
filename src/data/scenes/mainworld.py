@@ -17,15 +17,13 @@ class MainWorld(Scene):
         self.lightroom = LightRoom(self)
         self.light_collisions = []
 
-        self.g = GameMap(
-            "data/tilemaps/house.tmx"
-        )
+        self.g = GameMap("data/tilemaps/house.tmx")
 
         for r in self.g.collision_rects:
             line = rect_to_lines(r)
             self.light_collisions.extend(line)
             self.collision_rects.append(r)
-        
+
         self.player = Player()
         self.player.position = screen_size / 3
         self.entities.append(self.player)
@@ -55,5 +53,5 @@ class MainWorld(Scene):
             screen_size.x / 2 - map_surf_size.x / 2,
             screen_size.y / 2 - map_surf_size.y / 2,
         )
-        
+
         self.advance_frame()
