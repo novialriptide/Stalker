@@ -3,6 +3,7 @@ from SakuyaEngine.lights import LightRoom
 from SakuyaEngine.math import get_angle, rect_to_lines
 
 from data.scripts.map_loader import GameMap
+from data.scripts.player import Player
 
 from math import degrees
 
@@ -12,6 +13,7 @@ import sys
 
 class MainWorld(Scene):
     def on_awake(self):
+        screen_size = pygame.Vector2(self.client.screen.get_size())
         self.lightroom = LightRoom(self)
         self.light_collisions = []
 
@@ -23,6 +25,10 @@ class MainWorld(Scene):
             line = rect_to_lines(r)
             self.light_collisions.extend(line)
             self.collision_rects.append(r)
+        
+        self.player = Player()
+        self.player.position = screen_size / 3
+        self.entities.append(self.player)
 
     def update(self):
         for event in pygame.event.get():
@@ -32,9 +38,9 @@ class MainWorld(Scene):
 
         self.screen.fill((0, 0, 255))
 
-        dir = degrees(get_angle(self.client.mouse_pos, screen_size / 3)) + 180
+        dir = degrees(get_angle(self.player.position, self.client.mouse_pos))
         self.lightroom.draw_spot_light(
-            screen_size / 3, 150, dir, 70, collisions=self.light_collisions
+            self.player.position, 150, dir, 70, collisions=self.light_collisions
         )
         map_surf = self.g.surface
         map_surf_size = self.g.size
