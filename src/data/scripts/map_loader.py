@@ -3,20 +3,42 @@ from SakuyaEngine.tile import crop_tile_image
 import pytmx
 import pygame
 
+
 class GameMap:
     def __init__(self, file_path: str) -> None:
         self.file_path = file_path
-        self.tiled_map = pytmx.TiledMap(file_path)
-        
-        self.surface = pygame.Surface((self.tiled_map.width * self.tiled_map.tilewidth, self.tiled_map.height * self.tiled_map.tileheight))
-        
-        for layer in self.tiled_map.visible_tile_layers:
-            layer = self.tiled_map.layers[layer]
-            for x, y, image, in layer.tiles():
+        self.data = pytmx.TiledMap(file_path)
+        self.collision_rects = []
+
+        self.surface = pygame.Surface(
+            (
+                self.data.width * self.data.tilewidth,
+                self.data.height * self.data.tileheight,
+            )
+        )
+
+        for layer in self.data.visible_tile_layers:
+            layer = self.data.layers[layer]
+            for (
+                x,
+                y,
+                image,
+            ) in layer.tiles():
                 dim = image[1]
                 img = pygame.image.load(image[0]).convert_alpha()
                 cropped_img = crop_tile_image(img, dim[0], dim[1], dim[2], dim[3])
-                self.surface.blit(cropped_img, (x * self.tiled_map.tilewidth, y * self.tiled_map.tileheight))
-        
-        for obj in self.tiled_map.objects:
-            print(obj)
+                self.surface.blit(
+                    cropped_img, (x * self.data.tilewidth, y * self.data.tileheight)
+                )
+
+        for obj in self.data.objects:
+            if obj.type and obj.type == "collision_rect":
+                r = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                self.collision_rects.append(r)
+
+    @property
+    def size(self) -> pygame.Vector2:
+        return pygame.Vector2(
+            self.data.width * self.data.tilewidth,
+            self.data.height * self.data.tileheight,
+        )
