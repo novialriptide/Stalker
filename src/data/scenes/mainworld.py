@@ -30,7 +30,7 @@ class MainWorld(Scene):
 
         self.player = Player()
         self.player.position = screen_size / 3
-        self.entities.append(self.player)
+        self.add_entity(self.player)
 
         self.controller = PlayerController()
 
