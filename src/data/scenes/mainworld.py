@@ -15,6 +15,8 @@ import sys
 
 class MainWorld(Scene):
     def on_awake(self):
+        self.draw_debug_collisions = False
+        
         screen_size = pygame.Vector2(self.client.screen.get_size())
         self.lightroom = LightRoom(self)
         self.light_collisions = []
@@ -79,9 +81,6 @@ class MainWorld(Scene):
         self.screen.blit(map_surf, (0, 0))
         self.screen.blit(self.lightroom.surface, (0, 0))
 
-        for c in self.light_collisions:
-            pygame.draw.line(self.screen, (255, 0, 0), c[0], c[1])
-
         # Camera
         self.camera.position = pygame.Vector2(
             screen_size.x / 2 - map_surf_size.x / 2,
@@ -89,5 +88,15 @@ class MainWorld(Scene):
         )
 
         self.player.velocity = self.player.speed * self.controller.movement
+        
+        for e in self.entities:
+            self.screen.blit(e.sprite, e.position)
+            
+        if self.draw_debug_collisions:
+            for r in self.collision_rects:
+                pygame.draw.rect(self.screen, (255, 255, 0), r)
+
+            for c in self.light_collisions:
+                pygame.draw.line(self.screen, (255, 0, 0), c[0], c[1])
 
         self.advance_frame()
