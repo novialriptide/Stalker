@@ -2,8 +2,10 @@ from SakuyaEngine.scene import Scene
 from SakuyaEngine.lights import LightRoom
 from SakuyaEngine.math import get_angle, rect_to_lines
 
+from data.scripts.controller import PlayerController
 from data.scripts.map_loader import GameMap
 from data.scripts.player import Player
+from data.scripts.const import KEYBOARD
 
 from math import degrees
 
@@ -28,10 +30,42 @@ class MainWorld(Scene):
         self.player.position = screen_size / 3
         self.entities.append(self.player)
 
-    def update(self):
+        self.controller = PlayerController()
+
+    def input(self) -> None:
+        controller = self.controller
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == KEYBOARD["left1"]:
+                    controller.is_moving_left = True
+                if event.key == KEYBOARD["right1"]:
+                    controller.is_moving_right = True
+                if event.key == KEYBOARD["up1"]:
+                    controller.is_moving_up = True
+                if event.key == KEYBOARD["down1"]:
+                    controller.is_moving_down = True
+            if event.type == pygame.KEYUP:
+                if event.key == KEYBOARD["left1"]:
+                    controller.is_moving_left = False
+                    self.player.velocity.x = 0
+                if event.key == KEYBOARD["right1"]:
+                    controller.is_moving_right = False
+                    self.player.velocity.x = 0
+                if event.key == KEYBOARD["up1"]:
+                    controller.is_moving_up = False
+                    self.player.velocity.y = 0
+                if event.key == KEYBOARD["down1"]:
+                    controller.is_moving_down = False
+                    self.player.velocity.y = 0
+                if event.key == KEYBOARD["select"]:
+                    self.client.add_scene("Pause", exit_scene=self)
+                    self.pause()
+
+    def update(self):
+        self.input()
+
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
         self.screen.fill((0, 0, 255))
@@ -53,5 +87,7 @@ class MainWorld(Scene):
             screen_size.x / 2 - map_surf_size.x / 2,
             screen_size.y / 2 - map_surf_size.y / 2,
         )
+
+        self.player.velocity = self.player.speed * self.controller.movement
 
         self.advance_frame()
