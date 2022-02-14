@@ -26,7 +26,7 @@ class GameMap:
             ) in layer.tiles():
                 dim = image[1]
                 img = pygame.image.load(image[0]).convert_alpha()
-                cropped_img = crop_tile_image(img, dim[0], dim[1], dim[2], dim[3])
+                cropped_img = img.subsurface(dim)
                 self.surface.blit(
                     cropped_img, (x * self.data.tilewidth, y * self.data.tileheight)
                 )
