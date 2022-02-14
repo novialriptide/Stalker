@@ -17,4 +17,4 @@ class Player(Entity):
         self.anim_set("idle")
 
     def on_update(self) -> None:
-        print("d")
+        pass
