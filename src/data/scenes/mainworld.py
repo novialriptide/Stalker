@@ -16,7 +16,7 @@ import sys
 class MainWorld(Scene):
     def on_awake(self):
         self.draw_debug_collisions = False
-        
+
         screen_size = pygame.Vector2(self.client.screen.get_size())
         self.lightroom = LightRoom(self)
         self.light_collisions = []
@@ -91,10 +91,10 @@ class MainWorld(Scene):
         )
 
         self.player.velocity = self.player.speed * self.controller.movement
-        
+
         for e in self.entities:
             self.screen.blit(e.sprite, e.position)
-            
+
         if self.draw_debug_collisions:
             for r in self.collision_rects:
                 pygame.draw.rect(self.screen, (255, 255, 0), r)

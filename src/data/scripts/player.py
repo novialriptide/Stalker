@@ -11,8 +11,10 @@ import pygame
 class Player(Entity):
     def on_awake(self) -> None:
         self.speed = 0.75
-        
-        idle = Animation("idle", split_image(pygame.image.load("data/sprites/player.png"), 8, 8))
+
+        idle = Animation(
+            "idle", split_image(pygame.image.load("data/sprites/player.png"), 8, 8)
+        )
         self.anim_add(idle)
         self.anim_set("idle")
 
