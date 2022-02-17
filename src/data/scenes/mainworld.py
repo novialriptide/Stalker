@@ -15,7 +15,7 @@ import sys
 
 class MainWorld(Scene):
     def on_awake(self):
-        self.draw_debug_collisions = False
+        self.draw_debug_collisions = True
 
         screen_size = pygame.Vector2(self.client.screen.get_size())
         self.lightroom = LightRoom(self)
@@ -24,9 +24,11 @@ class MainWorld(Scene):
         self.g = GameMap("data/tilemaps/house.tmx")
 
         for r in self.g.collision_rects:
+            self.collision_rects.append(r)
+
+        for r in self.g.light_col_rects:
             line = rect_to_lines(r)
             self.light_collisions.extend(line)
-            self.collision_rects.append(r)
 
         self.player = Player()
         self.player.position = screen_size / 3
