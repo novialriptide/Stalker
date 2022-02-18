@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="7" nextobjectid="55">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="9" nextobjectid="62">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="10" height="10">
   <data encoding="csv">
@@ -29,16 +29,33 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <layer id="7" name="interact" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,11,11,11,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
  <objectgroup color="#aa0000" id="4" name="Physics Collision">
   <object id="6" type="collision_rect" x="0" y="16" width="8" height="64"/>
   <object id="10" type="collision_rect" x="8" y="16" width="64" height="8"/>
   <object id="11" type="collision_rect" x="72" y="16" width="8" height="64"/>
   <object id="12" type="collision_rect" x="8" y="72" width="64" height="8"/>
  </objectgroup>
- <objectgroup id="6" name="Light Collision">
+ <objectgroup color="#ffea00" id="6" name="Light Collision">
   <object id="50" type="light_col_rect" x="0" y="-8" width="8" height="88"/>
   <object id="51" type="light_col_rect" x="72" y="-8" width="8" height="88"/>
   <object id="52" type="light_col_rect" x="8" y="72" width="64" height="8"/>
   <object id="54" type="light_col_rect" x="8" y="-8" width="64" height="8"/>
+ </objectgroup>
+ <objectgroup color="#00f310" id="8" name="Event">
+  <object id="56" type="interact" x="24" y="40" width="24" height="8"/>
  </objectgroup>
 </map>
