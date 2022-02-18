@@ -10,6 +10,7 @@ class GameMap:
         self.data = pytmx.TiledMap(file_path)
         self.collision_rects = []
         self.light_col_rects = []
+        self.interact_rects = []
 
         self.surface = pygame.Surface(
             (
@@ -41,6 +42,10 @@ class GameMap:
                 elif obj.type == "light_col_rect":
                     r = pygame.Rect(obj.x, obj.y, obj.width - 1, obj.height - 1)
                     self.light_col_rects.append(r)
+                
+                elif obj.type == "interact":
+                    r = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                    self.interact_rects.append(r)
 
     @property
     def size(self) -> pygame.Vector2:
