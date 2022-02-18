@@ -1,0 +1,6 @@
+1. optimize lighting engine for sakuyaengine
+2. add interaction rects for tmx files
+3. add windows for the enemy to enter
+4. add computer so you can interact with the enemy if outside
+5. add button hints
+6. add ability to hide
