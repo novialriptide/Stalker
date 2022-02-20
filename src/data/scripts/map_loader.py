@@ -1,5 +1,3 @@
-from SakuyaEngine.tile import crop_tile_image
-
 import pytmx
 import pygame
 
@@ -10,7 +8,7 @@ class GameMap:
         self.data = pytmx.TiledMap(file_path)
         self.collision_rects = []
         self.light_col_rects = []
-        self.interact_rects = []
+        self.interact_objs = []
 
         self.surface = pygame.Surface(
             (
@@ -45,7 +43,9 @@ class GameMap:
 
                 elif obj.type == "interact":
                     r = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
-                    self.interact_rects.append(r)
+                    self.interact_objs.append(
+                        {"rect": r, "hint": obj.properties["hint"], "cmd": obj.properties["cmd"]}
+                    )
 
     @property
     def size(self) -> pygame.Vector2:
