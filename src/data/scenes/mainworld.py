@@ -76,7 +76,7 @@ class MainWorld(Scene):
 
         dir = degrees(get_angle(self.player.position, self.client.mouse_pos))
         self.lightroom.draw_spot_light(
-            self.player.center_position, 60, dir, 70, collisions=self.light_collisions
+           self.player.center_position, 60, dir, 70, collisions=self.light_collisions
         )
         self.lightroom.draw_point_light(
             self.player.center_position, 14, collisions=self.light_collisions
