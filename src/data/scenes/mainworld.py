@@ -16,7 +16,7 @@ import sys
 class MainWorld(Scene):
     def on_awake(self):
         self.draw_debug_collisions = False
-        self.PX_INTERACT_MIN_DISTANCE = 10
+        self.PX_INTERACT_MIN_DISTANCE = 15
 
         screen_size = pygame.Vector2(self.client.screen.get_size())
         self.lightroom = LightRoom(self)
@@ -45,15 +45,23 @@ class MainWorld(Scene):
             if event.type == pygame.KEYDOWN:
                 if event.key == KEYBOARD["left1"]:
                     controller.is_moving_left = True
+                    if self.player.hiding:
+                        self.player.hiding = False
 
                 if event.key == KEYBOARD["right1"]:
                     controller.is_moving_right = True
+                    if self.player.hiding:
+                        self.player.hiding = False
 
                 if event.key == KEYBOARD["up1"]:
                     controller.is_moving_up = True
+                    if self.player.hiding:
+                        self.player.hiding = False
 
                 if event.key == KEYBOARD["down1"]:
                     controller.is_moving_down = True
+                    if self.player.hiding:
+                        self.player.hiding = False
 
             if event.type == pygame.KEYUP:
                 if event.key == KEYBOARD["left1"]:
@@ -83,7 +91,7 @@ class MainWorld(Scene):
                     player_pos = self.player.center_position
                     dist = math.sqrt(((rect.y + rect.height / 2 - player_pos.y) ** 2) + ((rect.x + rect.width / 2 - player_pos.x) ** 2))
                     if rect.collidepoint(self.client.mouse_pos - self.camera.position) and dist <= self.PX_INTERACT_MIN_DISTANCE:
-                        CMDS[obj["cmd"]]()
+                        CMDS[obj["cmd"]](player=self.player, rect=rect)
 
     def update(self):
         self.input()

@@ -1,6 +1,6 @@
 from SakuyaEngine.animation import Animation
 from SakuyaEngine.tile import split_image
-from SakuyaEngine.math import vector2_move_toward
+from SakuyaEngine.math import vector2_move_toward, move_toward
 
 from .entity import Entity
 
@@ -18,6 +18,10 @@ class Player(Entity):
         )
         self.anim_add(idle)
         self.anim_set("idle")
+        
+        self.opacity = 1
+        self.display_opacity = self.opacity
+        self.hiding = False
 
     def on_update(self) -> None:
         if self.target_position is not None:
@@ -26,3 +30,11 @@ class Player(Entity):
 
             elif self.target_position != self.position:
                 self.position = vector2_move_toward(self.position, self.target_position, self.speed)
+        
+        if self.hiding:
+            self.opacity = 0
+        if not self.hiding:
+            self.opacity = 1
+        self.display_opacity = move_toward(self.display_opacity, self.opacity, 0.05)
+        
+        self.alpha = self.display_opacity * 255
