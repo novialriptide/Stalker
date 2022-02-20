@@ -1,5 +1,6 @@
 from SakuyaEngine.animation import Animation
 from SakuyaEngine.tile import split_image
+from SakuyaEngine.math import vector2_move_toward
 
 from .entity import Entity
 
@@ -19,4 +20,9 @@ class Player(Entity):
         self.anim_set("idle")
 
     def on_update(self) -> None:
-        pass
+        if self.target_position is not None:
+            if self.target_position == self.position:
+                self.target_position = None
+
+            elif self.target_position != self.position:
+                self.position = vector2_move_toward(self.position, self.target_position, self.speed)

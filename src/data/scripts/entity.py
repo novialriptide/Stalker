@@ -28,3 +28,4 @@ class Entity(Entity):
             gravity_scale=gravity_scale,
         )
         self.gravity = pygame.Vector2(0, 0)
+        self.target_position = None
