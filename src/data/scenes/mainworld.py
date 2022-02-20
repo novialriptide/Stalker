@@ -8,15 +8,15 @@ from data.scripts.map_cmds import CMDS
 from data.scripts.player import Player
 from data.scripts.const import KEYBOARD
 
-from math import degrees
-
+import math
 import pygame
 import sys
 
 
 class MainWorld(Scene):
     def on_awake(self):
-        self.draw_debug_collisions = True
+        self.draw_debug_collisions = False
+        self.PX_INTERACT_MIN_DISTANCE = 10
 
         screen_size = pygame.Vector2(self.client.screen.get_size())
         self.lightroom = LightRoom(self)
@@ -79,7 +79,10 @@ class MainWorld(Scene):
             if event.type == pygame.MOUSEBUTTONUP:
                 # Player Interactions
                 for obj in self.g.interact_objs:
-                    if obj["rect"].collidepoint(self.client.mouse_pos):
+                    rect = obj["rect"]
+                    player_pos = self.player.center_position
+                    dist = math.sqrt(((rect.y + rect.height / 2 - player_pos.y) ** 2) + ((rect.x + rect.width / 2 - player_pos.x) ** 2))
+                    if rect.collidepoint(self.client.mouse_pos) and dist <= self.PX_INTERACT_MIN_DISTANCE:
                         CMDS[obj["cmd"]]()
 
     def update(self):
@@ -87,10 +90,13 @@ class MainWorld(Scene):
 
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
-        self.screen.fill((0, 0, 255))
+        self.screen.fill((0, 0, 0))
+        
+        # Camera
+        self.camera.position = -self.player.center_position + screen_size / 2
         
         # Draw Player Flashlight
-        dir = degrees(get_angle(self.player.position, self.client.mouse_pos))
+        dir = math.degrees(get_angle(self.player.position + self.camera.position, self.client.mouse_pos))
         self.lightroom.draw_spot_light(
             self.player.center_position, 60, dir, 70, collisions=self.light_collisions
         )
@@ -101,16 +107,11 @@ class MainWorld(Scene):
         # Draw Map
         map_surf = self.g.surface
         map_surf_size = self.g.size
-        self.screen.blit(map_surf, (0, 0))
+        self.screen.blit(map_surf, self.camera.position)
 
         # Draw LightRoom
-        self.screen.blit(self.lightroom.surface, (0, 0))
+        self.screen.blit(self.lightroom.surface, self.camera.position)
 
-        # Camera
-        self.camera.position = pygame.Vector2(
-            screen_size.x / 2 - map_surf_size.x / 2,
-            screen_size.y / 2 - map_surf_size.y / 2,
-        )
         
         # Draw Interaction Hints
         for obj in self.g.interact_objs:
@@ -121,7 +122,7 @@ class MainWorld(Scene):
 
         # Draw Entities
         for e in self.entities:
-            self.screen.blit(e.sprite, e.position)
+            self.screen.blit(e.sprite, e.position + self.camera.position)
 
         # Debug Collisions
         if self.draw_debug_collisions:
