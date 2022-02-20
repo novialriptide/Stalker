@@ -4,3 +4,5 @@
 4. add computer so you can interact with the enemy if outside
 5. add button hints
 6. add ability to hide
+
+add quote: "Don't videorecord me. It's creepy and invasive" from thebluecap3
