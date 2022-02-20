@@ -4,6 +4,7 @@ from SakuyaEngine.math import get_angle, rect_to_lines
 
 from data.scripts.controller import PlayerController
 from data.scripts.map_loader import GameMap
+from data.scripts.map_cmds import CMDS
 from data.scripts.player import Player
 from data.scripts.const import KEYBOARD
 
@@ -79,8 +80,7 @@ class MainWorld(Scene):
                 # Player Interactions
                 for obj in self.g.interact_objs:
                     if obj["rect"].collidepoint(self.client.mouse_pos):
-                        # execute the cmd
-                        pass
+                        CMDS[obj["cmd"]]()
 
     def update(self):
         self.input()
