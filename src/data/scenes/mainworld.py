@@ -44,28 +44,43 @@ class MainWorld(Scene):
             if event.type == pygame.KEYDOWN:
                 if event.key == KEYBOARD["left1"]:
                     controller.is_moving_left = True
+
                 if event.key == KEYBOARD["right1"]:
                     controller.is_moving_right = True
+
                 if event.key == KEYBOARD["up1"]:
                     controller.is_moving_up = True
+
                 if event.key == KEYBOARD["down1"]:
                     controller.is_moving_down = True
+
             if event.type == pygame.KEYUP:
                 if event.key == KEYBOARD["left1"]:
                     controller.is_moving_left = False
                     self.player.velocity.x = 0
+
                 if event.key == KEYBOARD["right1"]:
                     controller.is_moving_right = False
                     self.player.velocity.x = 0
+
                 if event.key == KEYBOARD["up1"]:
                     controller.is_moving_up = False
                     self.player.velocity.y = 0
+
                 if event.key == KEYBOARD["down1"]:
                     controller.is_moving_down = False
                     self.player.velocity.y = 0
+
                 if event.key == KEYBOARD["select"]:
                     self.client.add_scene("Pause", exit_scene=self)
                     self.pause()
+            
+            if event.type == pygame.MOUSEBUTTONUP:
+                # Player Interactions
+                for obj in self.g.interact_objs:
+                    if obj["rect"].collidepoint(self.client.mouse_pos):
+                        # execute the cmd
+                        pass
 
     def update(self):
         self.input()
@@ -73,17 +88,22 @@ class MainWorld(Scene):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
         self.screen.fill((0, 0, 255))
-
+        
+        # Draw Player Flashlight
         dir = degrees(get_angle(self.player.position, self.client.mouse_pos))
         self.lightroom.draw_spot_light(
-           self.player.center_position, 60, dir, 70, collisions=self.light_collisions
+            self.player.center_position, 60, dir, 70, collisions=self.light_collisions
         )
         self.lightroom.draw_point_light(
             self.player.center_position, 14, collisions=self.light_collisions
         )
+
+        # Draw Map
         map_surf = self.g.surface
         map_surf_size = self.g.size
         self.screen.blit(map_surf, (0, 0))
+
+        # Draw LightRoom
         self.screen.blit(self.lightroom.surface, (0, 0))
 
         # Camera
@@ -91,12 +111,19 @@ class MainWorld(Scene):
             screen_size.x / 2 - map_surf_size.x / 2,
             screen_size.y / 2 - map_surf_size.y / 2,
         )
+        
+        # Draw Interaction Hints
+        for obj in self.g.interact_objs:
+            if obj["rect"].collidepoint(self.client.mouse_pos):
+                print(obj["hint"])
 
         self.player.velocity = self.player.speed * self.controller.movement
 
+        # Draw Entities
         for e in self.entities:
             self.screen.blit(e.sprite, e.position)
 
+        # Debug Collisions
         if self.draw_debug_collisions:
             for r in self.collision_rects:
                 pygame.draw.rect(self.screen, (255, 255, 0), r)
