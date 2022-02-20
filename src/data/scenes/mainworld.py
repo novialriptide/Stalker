@@ -82,7 +82,7 @@ class MainWorld(Scene):
                     rect = obj["rect"]
                     player_pos = self.player.center_position
                     dist = math.sqrt(((rect.y + rect.height / 2 - player_pos.y) ** 2) + ((rect.x + rect.width / 2 - player_pos.x) ** 2))
-                    if rect.collidepoint(self.client.mouse_pos) and dist <= self.PX_INTERACT_MIN_DISTANCE:
+                    if rect.collidepoint(self.client.mouse_pos - self.camera.position) and dist <= self.PX_INTERACT_MIN_DISTANCE:
                         CMDS[obj["cmd"]]()
 
     def update(self):
@@ -115,7 +115,7 @@ class MainWorld(Scene):
         
         # Draw Interaction Hints
         for obj in self.g.interact_objs:
-            if obj["rect"].collidepoint(self.client.mouse_pos):
+            if obj["rect"].collidepoint(self.client.mouse_pos - self.camera.position):
                 print(obj["hint"])
 
         self.player.velocity = self.player.speed * self.controller.movement
