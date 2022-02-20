@@ -12,3 +12,5 @@ Survive the night until the police arrive, you live in the countryside, so it'll
 The stalker's online alias is `thebluecap3` and is communicating you through your phone. He might hint where he is trying to break in next through your phone.
 
 If the intruder eventually breaks into your home, you can only hide from him. You can hide under your bed, closet, etc, but you can only delay until the police arrive. The intruder can also hear you so if you're in a radius, the intruder will come after that sound.
+
+If you don't get a picture of the stalker looking through your windows, the police will not believe you.
