@@ -1,4 +1,4 @@
-# Stay Alert
+# Stalker
 A pygame horror game using SakuyaEngine v3
 
 ## Build From Source
