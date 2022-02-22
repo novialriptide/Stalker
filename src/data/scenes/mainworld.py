@@ -137,7 +137,7 @@ class MainWorld(Scene):
                 collisions=self.light_collisions,
             )
             self.lightroom.draw_point_light(
-                self.player.center_position, 15, collisions=self.light_collisions
+                self.player.center_position + pygame.Vector2(1, 1), 15, collisions=self.light_collisions
             )
 
         # Draw Map
