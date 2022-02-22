@@ -58,48 +58,46 @@ class MainWorld(Scene):
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == KEYBOARD["left1"]:
-                    controller.is_moving_left = True
-                    if self.player.hiding:
-                        self.player.hiding = False
+                if self.player.can_walk:
+                    if event.key == KEYBOARD["left1"]:
+                        controller.is_moving_left = True
 
-                if event.key == KEYBOARD["right1"]:
-                    controller.is_moving_right = True
-                    if self.player.hiding:
-                        self.player.hiding = False
+                    if event.key == KEYBOARD["right1"]:
+                        controller.is_moving_right = True
 
-                if event.key == KEYBOARD["up1"]:
-                    controller.is_moving_up = True
-                    if self.player.hiding:
-                        self.player.hiding = False
+                    if event.key == KEYBOARD["up1"]:
+                        controller.is_moving_up = True
 
-                if event.key == KEYBOARD["down1"]:
-                    controller.is_moving_down = True
-                    if self.player.hiding:
-                        self.player.hiding = False
+                    if event.key == KEYBOARD["down1"]:
+                        controller.is_moving_down = True
 
             if event.type == pygame.KEYUP:
-                if event.key == KEYBOARD["left1"]:
-                    controller.is_moving_left = False
-                    self.player.velocity.x = 0
+                if self.player.can_walk:
+                    if event.key == KEYBOARD["left1"]:
+                        controller.is_moving_left = False
+                        self.player.velocity.x = 0
 
-                if event.key == KEYBOARD["right1"]:
-                    controller.is_moving_right = False
-                    self.player.velocity.x = 0
+                    if event.key == KEYBOARD["right1"]:
+                        controller.is_moving_right = False
+                        self.player.velocity.x = 0
 
-                if event.key == KEYBOARD["up1"]:
-                    controller.is_moving_up = False
-                    self.player.velocity.y = 0
+                    if event.key == KEYBOARD["up1"]:
+                        controller.is_moving_up = False
+                        self.player.velocity.y = 0
 
-                if event.key == KEYBOARD["down1"]:
-                    controller.is_moving_down = False
-                    self.player.velocity.y = 0
+                    if event.key == KEYBOARD["down1"]:
+                        controller.is_moving_down = False
+                        self.player.velocity.y = 0
 
                 if event.key == KEYBOARD["select"]:
                     self.client.add_scene("Pause", exit_scene=self)
                     self.pause()
 
             if event.type == pygame.MOUSEBUTTONUP:
+                # Escape hide mode
+                if self.player.hiding:
+                    self.player.hiding = False
+                
                 # Player Interactions
                 for obj in self.g.interact_objs:
                     rect = obj["rect"]
@@ -153,7 +151,8 @@ class MainWorld(Scene):
         # Draw Interaction Hints
         for obj in self.g.interact_objs:
             if obj["rect"].collidepoint(self.client.mouse_pos - self.camera.position):
-                print(obj["hint"])
+                pass
+                #print(obj["hint"])
 
         self.player.velocity = self.player.speed * self.controller.movement
 
