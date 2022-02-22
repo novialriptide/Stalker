@@ -7,6 +7,7 @@ from data.scripts.map_loader import GameMap
 from data.scripts.map_cmds import CMDS
 from data.scripts.player import Player
 from data.scripts.const import KEYBOARD
+from data.scripts.window import Window
 
 import math
 import pygame
@@ -36,6 +37,20 @@ class MainWorld(Scene):
         self.add_entity(self.player)
 
         self.controller = PlayerController()
+
+        # Load Windows
+        self.windows = []
+        for obj in self.g.data.objects:
+            if obj.type and obj.visible:
+                if obj.type == "window":
+                    self.windows.append(
+                        Window(
+                            pygame.Rect(obj.x, obj.y, obj.width, obj.height),
+                            7,
+                            obj.properties["light_dir"],
+                            obj.properties["window_dir"],
+                        )
+                    )
 
     def input(self) -> None:
         controller = self.controller
@@ -127,17 +142,6 @@ class MainWorld(Scene):
                 self.player.center_position, 15, collisions=self.light_collisions
             )
 
-        # Draw Map Lights
-        for obj in self.g.data.objects:
-            if obj.type and obj.visible:
-                if obj.type == "area_light":
-                    self.lightroom.draw_area_light(
-                        obj.points[0],
-                        obj.points[1],
-                        obj.properties["length"],
-                        obj.properties["direction"],
-                    )
-
         # Draw Map
         map_surf = self.g.surface
         map_surf_size = self.g.size
@@ -164,5 +168,8 @@ class MainWorld(Scene):
 
             for c in self.light_collisions:
                 pygame.draw.line(self.screen, (255, 0, 0), c[0], c[1])
+
+            for w in self.windows:
+                pygame.draw.rect(self.screen, (255, 0, 0), w.rect)
 
         self.advance_frame()

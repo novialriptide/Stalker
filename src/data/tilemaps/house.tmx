@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="75">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="77">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="10" height="10">
   <data encoding="csv">
@@ -50,13 +50,12 @@
   <object id="12" type="collision_rect" x="8" y="72" width="64" height="8"/>
   <object id="74" type="collision_rect" x="8" y="0" width="16" height="8"/>
  </objectgroup>
- <objectgroup id="9" name="Lights" visible="0">
-  <object id="73" type="area_light" x="20" y="28">
+ <objectgroup color="#3fa733" id="9" name="Windows">
+  <object id="76" type="window" x="28" y="-8" width="28" height="9">
    <properties>
-    <property name="direction" type="float" value="20"/>
-    <property name="length" type="int" value="30"/>
+    <property name="light_dir" value="90"/>
+    <property name="window_dir" value="down"/>
    </properties>
-   <polyline points="6.625,-27.625 31.625,-27.625"/>
   </object>
  </objectgroup>
  <objectgroup color="#ffea00" id="6" name="Light Collision" visible="0">
