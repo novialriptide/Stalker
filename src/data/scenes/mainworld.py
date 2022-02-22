@@ -104,13 +104,25 @@ class MainWorld(Scene):
         self.camera.position = -self.player.center_position + screen_size / 2
         
         # Draw Player Flashlight
-        dir = math.degrees(get_angle(self.player.position + self.camera.position, self.client.mouse_pos))
-        self.lightroom.draw_spot_light(
-            self.player.center_position, 60, dir, 70, collisions=self.light_collisions
-        )
-        self.lightroom.draw_point_light(
-            self.player.center_position, 14, collisions=self.light_collisions
-        )
+        if self.player.flashlight:
+            dir = math.degrees(get_angle(self.player.position + self.camera.position, self.client.mouse_pos))
+            self.lightroom.draw_spot_light(
+                self.player.center_position, 60, dir, 70, collisions=self.light_collisions
+            )
+            self.lightroom.draw_point_light(
+                self.player.center_position, 14, collisions=self.light_collisions
+            )
+        
+        # Draw Map Lights
+        for obj in self.g.data.objects:
+            if obj.type and obj.visible:
+                if obj.type == "area_light":
+                    self.lightroom.draw_area_light(
+                        obj.points[0],
+                        obj.points[1],
+                        obj.properties["length"],
+                        obj.properties["direction"],
+                    )
 
         # Draw Map
         map_surf = self.g.surface
