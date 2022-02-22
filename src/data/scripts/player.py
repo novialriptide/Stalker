@@ -18,7 +18,7 @@ class Player(Entity):
         )
         self.anim_add(idle)
         self.anim_set("idle")
-        
+
         self.opacity = 1
         self.display_opacity = self.opacity
         self.hiding = False
@@ -31,7 +31,9 @@ class Player(Entity):
                 self.target_position = None
 
             elif self.target_position != self.position:
-                self.position = vector2_move_toward(self.position, self.target_position, self.speed)
+                self.position = vector2_move_toward(
+                    self.position, self.target_position, self.speed
+                )
 
         if self.hiding:
             self.opacity = 0
@@ -40,7 +42,7 @@ class Player(Entity):
             self.opacity = 1
             self.flashlight = True
             self.target_position = self.back_hide_pos
-            
+
         self.display_opacity = move_toward(self.display_opacity, self.opacity, 0.05)
-        
+
         self.alpha = self.display_opacity * 255

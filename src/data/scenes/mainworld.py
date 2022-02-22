@@ -83,14 +83,20 @@ class MainWorld(Scene):
                 if event.key == KEYBOARD["select"]:
                     self.client.add_scene("Pause", exit_scene=self)
                     self.pause()
-            
+
             if event.type == pygame.MOUSEBUTTONUP:
                 # Player Interactions
                 for obj in self.g.interact_objs:
                     rect = obj["rect"]
                     player_pos = self.player.center_position
-                    dist = math.sqrt(((rect.y + rect.height / 2 - player_pos.y) ** 2) + ((rect.x + rect.width / 2 - player_pos.x) ** 2))
-                    if rect.collidepoint(self.client.mouse_pos - self.camera.position) and dist <= self.PX_INTERACT_MIN_DISTANCE:
+                    dist = math.sqrt(
+                        ((rect.y + rect.height / 2 - player_pos.y) ** 2)
+                        + ((rect.x + rect.width / 2 - player_pos.x) ** 2)
+                    )
+                    if (
+                        rect.collidepoint(self.client.mouse_pos - self.camera.position)
+                        and dist <= self.PX_INTERACT_MIN_DISTANCE
+                    ):
                         CMDS[obj["cmd"]](player=self.player, rect=rect)
 
     def update(self):
@@ -99,20 +105,28 @@ class MainWorld(Scene):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
         self.screen.fill((0, 0, 0))
-        
+
         # Camera
         self.camera.position = -self.player.center_position + screen_size / 2
-        
+
         # Draw Player Flashlight
         if self.player.flashlight:
-            dir = math.degrees(get_angle(self.player.position + self.camera.position, self.client.mouse_pos))
+            dir = math.degrees(
+                get_angle(
+                    self.player.position + self.camera.position, self.client.mouse_pos
+                )
+            )
             self.lightroom.draw_spot_light(
-                self.player.center_position, 60, dir, 70, collisions=self.light_collisions
+                self.player.center_position,
+                60,
+                dir,
+                70,
+                collisions=self.light_collisions,
             )
             self.lightroom.draw_point_light(
-                self.player.center_position, 14, collisions=self.light_collisions
+                self.player.center_position, 15, collisions=self.light_collisions
             )
-        
+
         # Draw Map Lights
         for obj in self.g.data.objects:
             if obj.type and obj.visible:
@@ -132,7 +146,6 @@ class MainWorld(Scene):
         # Draw LightRoom
         self.screen.blit(self.lightroom.surface, self.camera.position)
 
-        
         # Draw Interaction Hints
         for obj in self.g.interact_objs:
             if obj["rect"].collidepoint(self.client.mouse_pos - self.camera.position):

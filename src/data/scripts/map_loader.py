@@ -44,7 +44,11 @@ class GameMap:
                 elif obj.type == "interact":
                     r = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
                     self.interact_objs.append(
-                        {"rect": r, "hint": obj.properties["hint"], "cmd": obj.properties["cmd"]}
+                        {
+                            "rect": r,
+                            "hint": obj.properties["hint"],
+                            "cmd": obj.properties["cmd"],
+                        }
                     )
 
     @property
