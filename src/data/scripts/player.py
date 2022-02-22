@@ -1,6 +1,7 @@
 from SakuyaEngine.animation import Animation
 from SakuyaEngine.tile import split_image
 from SakuyaEngine.math import vector2_move_toward, move_toward
+from SakuyaEngine.clock import Clock
 
 from .entity import Entity
 
@@ -12,6 +13,7 @@ import pygame
 class Player(Entity):
     def on_awake(self, scene) -> None:
         self.speed = 0.75
+        self.can_walk = True
 
         idle = Animation(
             "idle", split_image(pygame.image.load("data/sprites/player.png"), 8, 8)
@@ -24,8 +26,21 @@ class Player(Entity):
         self.hiding = False
         self.back_hide_pos = None
         self.flashlight = True
+        
+        self.hide_cooldown_clock = Clock()
+        self.hide_cooldown_val = 2500
 
     def on_update(self, scene) -> None:
+        if self.hiding:
+            self.opacity = 0
+            self.flashlight = False
+            self.can_walk = False
+        if not self.hiding:
+            self.opacity = 1
+            self.flashlight = True
+            self.target_position = self.back_hide_pos
+            self.can_walk = True
+            
         if self.target_position is not None:
             if self.target_position == self.position:
                 self.target_position = None
@@ -34,14 +49,6 @@ class Player(Entity):
                 self.position = vector2_move_toward(
                     self.position, self.target_position, self.speed
                 )
-
-        if self.hiding:
-            self.opacity = 0
-            self.flashlight = False
-        if not self.hiding:
-            self.opacity = 1
-            self.flashlight = True
-            self.target_position = self.back_hide_pos
 
         self.display_opacity = move_toward(self.display_opacity, self.opacity, 0.05)
 
