@@ -144,6 +144,10 @@ class MainWorld(Scene):
         map_surf = self.g.surface
         map_surf_size = self.g.size
         self.screen.blit(map_surf, self.camera.position)
+        
+        # Draw Windows
+        for w in self.windows:
+            w.draw_light(self.lightroom)
 
         # Draw LightRoom
         self.screen.blit(self.lightroom.surface, self.camera.position)
