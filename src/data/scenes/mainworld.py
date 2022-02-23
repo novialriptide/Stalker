@@ -111,6 +111,20 @@ class MainWorld(Scene):
                         and dist <= self.PX_INTERACT_MIN_DISTANCE
                     ):
                         CMDS[obj["cmd"]](player=self.player, rect=rect)
+                    
+                for w in self.windows:
+                    rect = w.rect
+                    player_pos = self.player.center_position
+                    dist = math.sqrt(
+                        ((rect.y + rect.height / 2 - player_pos.y) ** 2)
+                        + ((rect.x + rect.width / 2 - player_pos.x) ** 2)
+                    )
+                    if (
+                        rect.collidepoint(self.client.mouse_pos - self.camera.position)
+                        and dist <= self.PX_INTERACT_MIN_DISTANCE
+                    ):
+                        CMDS["close_win"](player=self.player, rect=rect, window=w)
+
 
     def update(self):
         self.input()
@@ -145,9 +159,10 @@ class MainWorld(Scene):
         map_surf_size = self.g.size
         self.screen.blit(map_surf, self.camera.position)
         
-        # Draw Windows
+        # Draw & Update Windows
         for w in self.windows:
             w.draw_light(self.lightroom)
+            w.update(self.client.delta_time)
 
         # Draw LightRoom
         self.screen.blit(self.lightroom.surface, self.camera.position)

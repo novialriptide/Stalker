@@ -15,5 +15,8 @@ def hide(**kwargs) -> None:
         player.back_hide_pos = player.position
         player.hiding = True
 
+def close_window(**kwargs) -> None:
+    window = kwargs["window"]
+    window.open_percent = 0
 
-CMDS = {"hide": hide}
+CMDS = {"hide": hide, "close_win": close_window}
