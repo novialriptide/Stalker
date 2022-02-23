@@ -50,6 +50,6 @@ class Player(Entity):
                     self.position, self.target_position, self.speed
                 )
 
-        self.display_opacity = move_toward(self.display_opacity, self.opacity, 0.05)
+        self.display_opacity = move_toward(self.display_opacity, self.opacity, 0.05 * scene.client.delta_time)
 
         self.alpha = self.display_opacity * 255
