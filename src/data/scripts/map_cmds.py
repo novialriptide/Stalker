@@ -6,7 +6,6 @@ def hide(**kwargs) -> None:
     rect = kwargs["rect"]
     
     if player.hide_cooldown_val <= player.hide_cooldown_clock.get_time():
-        player.hide_cooldown_clock.reset()
         player_rect = player.rect
         player.target_position = pygame.Vector2(
             rect.x + rect.width / 2 - player_rect.width / 2,

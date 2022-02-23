@@ -96,6 +96,7 @@ class MainWorld(Scene):
             if event.type == pygame.MOUSEBUTTONUP:
                 # Escape hide mode
                 if self.player.hiding:
+                    self.player.hide_cooldown_clock.reset()
                     self.player.hiding = False
                 
                 # Player Interactions
