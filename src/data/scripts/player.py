@@ -26,7 +26,7 @@ class Player(Entity):
         self.hiding = False
         self.back_hide_pos = None
         self.flashlight = True
-        
+
         self.hide_cooldown_clock = Clock()
         self.hide_cooldown_val = 2500
 
@@ -40,7 +40,7 @@ class Player(Entity):
             self.flashlight = True
             self.target_position = self.back_hide_pos
             self.can_walk = True
-            
+
         if self.target_position is not None:
             if self.target_position == self.position:
                 self.target_position = None
@@ -50,6 +50,8 @@ class Player(Entity):
                     self.position, self.target_position, self.speed
                 )
 
-        self.display_opacity = move_toward(self.display_opacity, self.opacity, 0.05 * scene.client.delta_time)
+        self.display_opacity = move_toward(
+            self.display_opacity, self.opacity, 0.05 * scene.client.delta_time
+        )
 
         self.alpha = self.display_opacity * 255

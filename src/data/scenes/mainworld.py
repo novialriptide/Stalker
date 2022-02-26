@@ -46,8 +46,6 @@ class MainWorld(Scene):
                     self.windows.append(
                         Window(
                             pygame.Rect(obj.x, obj.y, obj.width, obj.height),
-                            7,
-                            obj.properties["light_dir"],
                             obj.properties["window_dir"],
                         )
                     )
@@ -98,7 +96,7 @@ class MainWorld(Scene):
                 if self.player.hiding:
                     self.player.hide_cooldown_clock.reset()
                     self.player.hiding = False
-                
+
                 # Player Interactions
                 for obj in self.g.interact_objs:
                     rect = obj["rect"]
@@ -112,7 +110,7 @@ class MainWorld(Scene):
                         and dist <= self.PX_INTERACT_MIN_DISTANCE
                     ):
                         CMDS[obj["cmd"]](player=self.player, rect=rect)
-                    
+
                 for w in self.windows:
                     rect = w.rect
                     player_pos = self.player.center_position
@@ -125,7 +123,6 @@ class MainWorld(Scene):
                         and dist <= self.PX_INTERACT_MIN_DISTANCE
                     ):
                         CMDS["close_win"](player=self.player, rect=rect, window=w)
-
 
     def update(self):
         self.input()
@@ -152,14 +149,16 @@ class MainWorld(Scene):
                 collisions=self.light_collisions,
             )
             self.lightroom.draw_point_light(
-                self.player.center_position + pygame.Vector2(1, 1), 15, collisions=self.light_collisions
+                self.player.center_position + pygame.Vector2(1, 1),
+                15,
+                collisions=self.light_collisions,
             )
 
         # Draw Map
         map_surf = self.g.surface
         map_surf_size = self.g.size
         self.screen.blit(map_surf, self.camera.position)
-        
+
         # Draw & Update Windows
         for w in self.windows:
             w.draw_light(self.lightroom)
@@ -172,7 +171,7 @@ class MainWorld(Scene):
         for obj in self.g.interact_objs:
             if obj["rect"].collidepoint(self.client.mouse_pos - self.camera.position):
                 pass
-                #print(obj["hint"])
+                # print(obj["hint"])
 
         self.player.velocity = self.player.speed * self.controller.movement
 
