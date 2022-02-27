@@ -14,7 +14,7 @@ class Window:
         self.window_dir = window_dir
         self.opening_dir = opening_dir  # 1 is right, -1 is left
 
-        self.open_percent = 1
+        self.open_percent = 0
         self.display_open_percent = self.open_percent
 
     @property

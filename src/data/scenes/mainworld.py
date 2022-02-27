@@ -8,6 +8,7 @@ from data.scripts.map_cmds import CMDS
 from data.scripts.player import Player
 from data.scripts.const import KEYBOARD
 from data.scripts.window import Window
+from data.scripts.stalkerai import StalkerAI
 
 import math
 import pygame
@@ -16,10 +17,12 @@ import sys
 
 class MainWorld(Scene):
     def on_awake(self):
+        screen_size = pygame.Vector2(self.client.screen.get_size())
+
         self.draw_debug_collisions = False
         self.PX_INTERACT_MIN_DISTANCE = 15
 
-        screen_size = pygame.Vector2(self.client.screen.get_size())
+        # Map Setup
         self.lightroom = LightRoom(self)
         self.light_collisions = []
 
@@ -32,10 +35,10 @@ class MainWorld(Scene):
             line = rect_to_lines(r)
             self.light_collisions.extend(line)
 
+        # Player Setup
         self.player = Player()
         self.player.position = screen_size / 3
         self.add_entity(self.player)
-
         self.controller = PlayerController()
 
         # Load Windows
@@ -49,6 +52,9 @@ class MainWorld(Scene):
                             obj.properties["window_dir"],
                         )
                     )
+
+        # Stalker Setup
+        self.stalkerai = StalkerAI(self.windows, 2000, 0.2)
 
     def input(self) -> None:
         controller = self.controller
@@ -130,6 +136,9 @@ class MainWorld(Scene):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
         self.screen.fill((0, 0, 0))
+
+        # Stalker AI
+        window_choice = self.stalkerai.update()
 
         # Camera
         self.camera.position = -self.player.center_position + screen_size / 2

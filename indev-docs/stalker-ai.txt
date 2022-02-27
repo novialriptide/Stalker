@@ -1,0 +1,13 @@
+###############################################################
+                STALKER ARTIFICIAL INTELLIGENCE
+                     OUTSIDE OF THE HOUSE
+###############################################################
+
+The AI algorithm will have a list of windows to choose from,
+every x seconds, it will have a chance to open one of those
+windows.
+
+If the window is fully open, the Stalker will enter, but if the
+window isn't fully open yet, the player can close the window to
+prevent the Stalker from entering the premises.
+
