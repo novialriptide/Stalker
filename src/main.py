@@ -7,6 +7,7 @@ from SakuyaEngine.scene import SceneManager
 client = Client(
     f"Stay Alert",
     pygame.Vector2(128, 112),
+    mouse_image=pygame.image.load("data/sprites/mouse_pointer.png")
 )
 
 pygame.mixer.init()
