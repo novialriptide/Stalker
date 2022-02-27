@@ -169,9 +169,9 @@ class MainWorld(Scene):
 
         # Draw Interaction Hints
         for obj in self.g.interact_objs:
-            if obj["rect"].collidepoint(self.client.mouse_pos - self.camera.position):
-                pass
-                # print(obj["hint"])
+            mp = self.client.mouse_pos
+            if obj["rect"].collidepoint(mp - self.camera.position):
+                pygame.draw.rect(self.screen, (255, 255, 255), (mp.x, mp.y, 17, 6))
 
         self.player.velocity = self.player.speed * self.controller.movement
 
