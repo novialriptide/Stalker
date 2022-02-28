@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="78">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="79">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="10" height="10">
   <data encoding="csv">
@@ -59,7 +59,7 @@
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="12" type="collision_rect" x="8" y="72" width="64" height="8">
+  <object id="12" type="collision_rect" x="64" y="72" width="8" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
@@ -69,8 +69,13 @@
     <property name="light_col" type="bool" value="false"/>
    </properties>
   </object>
+  <object id="78" type="collision_rect" x="8" y="72" width="48" height="8">
+   <properties>
+    <property name="light_col" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup color="#3fa733" id="9" name="Windows" visible="0">
+ <objectgroup color="#3fa733" id="9" name="Windows">
   <object id="76" type="window" x="28" y="0" width="28" height="9">
    <properties>
     <property name="light_dir" value="90"/>
@@ -84,7 +89,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup color="#00f310" id="8" name="Event" visible="0">
+ <objectgroup color="#00f310" id="8" name="Event">
   <object id="56" type="interact" x="8" y="0" width="8" height="8">
    <properties>
     <property name="cmd" value="hide"/>
