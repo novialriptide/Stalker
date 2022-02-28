@@ -34,12 +34,12 @@ class GameMap:
         for obj in self.data.objects:
             if obj.type and obj.visible:
                 if obj.type == "collision_rect":
-                    r = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
-                    self.collision_rects.append(r)
+                    col_rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                    self.collision_rects.append(col_rect)
 
-                elif obj.type == "light_col_rect":
-                    r = pygame.Rect(obj.x, obj.y, obj.width - 1, obj.height - 1)
-                    self.light_col_rects.append(r)
+                    if obj.properties["light_col"]:
+                        light_rect = pygame.Rect(obj.x, obj.y, obj.width - 1, obj.height - 1)
+                        self.light_col_rects.append(light_rect)
 
                 elif obj.type == "interact":
                     r = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
