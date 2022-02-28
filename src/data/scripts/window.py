@@ -15,6 +15,9 @@ class Window:
         self.opening_dir = opening_dir  # 1 is right, -1 is left
 
         self.open_percent = 0
+        self.default_speed = 0.1
+        self.close_speed = 0.1
+        self.open_speed = 0.001
         self.display_open_percent = self.open_percent
 
     @property
@@ -73,6 +76,10 @@ class Window:
             )
 
     def update(self, delta_time: float) -> None:
+        speed = self.open_speed
+        if self.display_open_percent - self.open_percent > 0:
+            speed = self.close_speed
+        
         self.display_open_percent = move_toward(
-            self.display_open_percent, self.open_percent, 0.1 * delta_time
+            self.display_open_percent, self.open_percent, speed * delta_time
         )

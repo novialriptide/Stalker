@@ -54,7 +54,7 @@ class MainWorld(Scene):
                     )
 
         # Stalker Setup
-        self.stalkerai = StalkerAI(self.windows, 2000, 0.2)
+        self.stalkerai = StalkerAI(self.windows, 2000, 0.1)
 
     def input(self) -> None:
         controller = self.controller
@@ -129,6 +129,7 @@ class MainWorld(Scene):
                         and dist <= self.PX_INTERACT_MIN_DISTANCE
                     ):
                         CMDS["close_win"](player=self.player, rect=rect, window=w)
+                        self.stalkerai.current_window = None
 
     def update(self):
         self.input()
@@ -139,6 +140,8 @@ class MainWorld(Scene):
 
         # Stalker AI
         window_choice = self.stalkerai.update()
+        if window_choice is not None:
+            print(f"open window {window_choice}")
 
         # Camera
         self.camera.position = -self.player.center_position + screen_size / 2
