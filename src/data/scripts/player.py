@@ -1,6 +1,6 @@
 from SakuyaEngine.animation import Animation
 from SakuyaEngine.tile import split_image
-from SakuyaEngine.math import vector2_move_toward, move_toward
+from SakuyaEngine.math import move_toward
 from SakuyaEngine.clock import Clock
 
 from .entity import Entity
@@ -46,9 +46,7 @@ class Player(Entity):
                 self.target_position = None
 
             elif self.target_position != self.position:
-                self.position = vector2_move_toward(
-                    self.position, self.target_position, self.speed
-                )
+                self.position.move_towards_ip(self.target_position, self.speed)
 
         self.display_opacity = move_toward(
             self.display_opacity, self.opacity, 0.05 * scene.client.delta_time
