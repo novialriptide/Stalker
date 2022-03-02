@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="79">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="10" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="79">
  <tileset firstgid="1" source="house_tileset.tsx"/>
- <layer id="1" name="base" width="10" height="10">
+ <layer id="1" name="base" width="10" height="18">
   <data encoding="csv">
 0,1,1,1,1,1,1,1,1,0,
 0,1,1,1,1,1,1,1,1,0,
@@ -12,10 +12,18 @@
 0,1,1,1,1,1,1,1,1,0,
 0,1,1,1,1,1,1,1,1,0,
 0,1,1,1,1,1,1,1,1,0,
+0,0,0,0,0,0,0,1,0,0,
+0,1,1,1,1,1,1,1,1,0,
+0,1,1,1,1,1,1,1,1,0,
+0,1,1,1,1,1,1,1,1,0,
+0,1,1,1,1,1,1,1,1,0,
+0,1,1,1,1,1,1,1,1,0,
+0,1,1,1,1,1,1,1,1,0,
+0,1,1,1,1,1,1,1,1,0,
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="5" name="walls" width="10" height="10">
+ <layer id="5" name="walls" width="10" height="18">
   <data encoding="csv">
 0,8,9,9,9,9,9,9,7,0,
 0,10,0,0,0,0,0,0,5,0,
@@ -25,13 +33,29 @@
 0,10,0,0,0,0,0,0,5,0,
 0,10,0,0,0,0,0,0,5,0,
 0,10,0,0,0,0,0,0,5,0,
-0,3,4,4,4,4,4,4,2,0,
+0,3,4,4,4,4,4,0,2,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="interact" width="10" height="10">
+ <layer id="7" name="interact" width="10" height="18">
   <data encoding="csv">
 0,11,11,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,
