@@ -6,9 +6,10 @@ from data.scripts.controller import PlayerController
 from data.scripts.map_loader import GameMap
 from data.scripts.map_cmds import CMDS
 from data.scripts.player import Player
-from data.scripts.const import KEYBOARD
+from data.scripts.const import KEYBOARD, RANDOM_NOISE, RANDOM_NOISE_SIZE
 from data.scripts.window import Window
 from data.scripts.stalkerai import StalkerAI
+from data.scripts.random_noise import apply_noise
 
 import math
 import pygame
@@ -23,10 +24,9 @@ class MainWorld(Scene):
         self.PX_INTERACT_MIN_DISTANCE = 15
 
         # Map Setup
-        self.lightroom = LightRoom(self)
-        self.light_collisions = []
-
         self.g = GameMap("data/tilemaps/house.tmx")
+        self.lightroom = LightRoom(self, size=self.g.surface.get_size())
+        self.light_collisions = []
 
         for r in self.g.collision_rects:
             self.collision_rects.append(r)
@@ -190,6 +190,8 @@ class MainWorld(Scene):
         # Draw Entities
         for e in self.entities:
             self.screen.blit(e.sprite, e.position + self.camera.position)
+        
+        apply_noise(self)
 
         # Debug Collisions
         if self.draw_debug_collisions:

@@ -16,3 +16,7 @@ KEYBOARD = {
     "select": pygame.K_q,
     "start": pygame.K_ESCAPE,
 }
+
+RANDOM_NOISE = pygame.image.load("data/sprites/random_noise.png").convert_alpha()
+RANDOM_NOISE.set_alpha(10)
+RANDOM_NOISE_SIZE = RANDOM_NOISE.get_size()
