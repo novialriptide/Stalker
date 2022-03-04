@@ -4,7 +4,7 @@
 4. add additional rooms
 5. add main menu
 6. implement pathfinding somehow
-
+7. make the lightroom bounding box be setable in the tiled mapeditor 
 
 
 
