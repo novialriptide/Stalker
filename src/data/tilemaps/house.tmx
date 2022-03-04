@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="10" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="79">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="10" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="80">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="10" height="18">
   <data encoding="csv">
@@ -35,13 +35,13 @@
 0,10,0,0,0,0,0,0,5,0,
 0,3,4,4,4,4,4,0,2,0,
 0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
+0,8,9,9,9,9,9,0,7,0,
+0,10,0,0,0,0,0,0,5,0,
+0,10,0,0,0,0,0,0,5,0,
+0,10,0,0,0,0,0,0,5,0,
+0,10,0,0,0,0,0,0,5,0,
+0,10,0,0,0,0,0,0,5,0,
+0,3,4,4,4,4,4,4,2,0,
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
@@ -68,7 +68,7 @@
 </data>
  </layer>
  <objectgroup color="#aa0000" id="4" name="Physics Collision">
-  <object id="6" type="collision_rect" x="0" y="-8" width="8" height="88">
+  <object id="6" type="collision_rect" x="0" y="-8" width="8" height="152">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
@@ -78,7 +78,7 @@
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="11" type="collision_rect" x="72" y="-8" width="8" height="88">
+  <object id="11" type="collision_rect" x="72" y="-8" width="8" height="152">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
@@ -94,6 +94,11 @@
    </properties>
   </object>
   <object id="78" type="collision_rect" x="8" y="72" width="48" height="8">
+   <properties>
+    <property name="light_col" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="79" type="collision_rect" x="8" y="136" width="64" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
