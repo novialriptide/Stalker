@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="10" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="80">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="10" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="82">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="10" height="18">
   <data encoding="csv">
@@ -12,7 +12,7 @@
 0,1,1,1,1,1,1,1,1,0,
 0,1,1,1,1,1,1,1,1,0,
 0,1,1,1,1,1,1,1,1,0,
-0,0,0,0,0,0,0,1,0,0,
+0,0,0,0,0,0,1,1,0,0,
 0,1,1,1,1,1,1,1,1,0,
 0,1,1,1,1,1,1,1,1,0,
 0,1,1,1,1,1,1,1,1,0,
@@ -33,9 +33,9 @@
 0,10,0,0,0,0,0,0,5,0,
 0,10,0,0,0,0,0,0,5,0,
 0,10,0,0,0,0,0,0,5,0,
-0,3,4,4,4,4,4,0,2,0,
+0,3,4,4,4,4,0,0,2,0,
 0,0,0,0,0,0,0,0,0,0,
-0,8,9,9,9,9,9,0,7,0,
+0,8,9,9,9,9,0,0,7,0,
 0,10,0,0,0,0,0,0,5,0,
 0,10,0,0,0,0,0,0,5,0,
 0,10,0,0,0,0,0,0,5,0,
@@ -93,12 +93,17 @@
     <property name="light_col" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="78" type="collision_rect" x="8" y="72" width="48" height="8">
+  <object id="78" type="collision_rect" x="8" y="72" width="40" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
   <object id="79" type="collision_rect" x="8" y="136" width="64" height="8">
+   <properties>
+    <property name="light_col" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="80" type="collision_rect" x="32" y="100" width="40" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
@@ -115,6 +120,12 @@
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="right"/>
+   </properties>
+  </object>
+  <object id="81" type="window" x="63" y="114" width="9" height="14">
+   <properties>
+    <property name="light_dir" value="90"/>
+    <property name="window_dir" value="left"/>
    </properties>
   </object>
  </objectgroup>
