@@ -20,3 +20,6 @@ KEYBOARD = {
 RANDOM_NOISE = pygame.image.load("data/sprites/random_noise.png").convert_alpha()
 RANDOM_NOISE.set_alpha(10)
 RANDOM_NOISE_SIZE = RANDOM_NOISE.get_size()
+
+OPEN_WINDOW_SOUND = pygame.mixer.Sound("data/audio/game_window_open.mp3")
+CLOSE_WINDOW_SOUND = pygame.mixer.Sound("data/audio/game_window_close.mp3")

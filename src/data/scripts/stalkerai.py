@@ -6,6 +6,7 @@ import random
 from SakuyaEngine.clock import Clock
 
 from .window import Window
+from .const import OPEN_WINDOW_SOUND
 
 
 class StalkerAI:
@@ -26,6 +27,7 @@ class StalkerAI:
     
     def open_window(self, window: Window) -> None:
         window.open_percent = 1
+        OPEN_WINDOW_SOUND.play()
 
     def update(self) -> None:
         if self.cooldown_clock.get_time() >= self.choice_cooldown and self.current_window is None:
