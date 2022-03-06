@@ -1,20 +1,85 @@
 from SakuyaEngine.scene import Scene
-from SakuyaEngine.lights import LightRoom
-from SakuyaEngine.math import get_angle, rect_to_lines
+from SakuyaEngine.controllers import BaseController
+from SakuyaEngine.animation import Animation
+from SakuyaEngine.entity import Entity
+from SakuyaEngine.math import move_toward
+from SakuyaEngine.clock import Clock
 
-from data.scripts.controller import PlayerController
-from data.scripts.map_loader import GameMap
-from data.scripts.map_cmds import CMDS
+import pygame
+
+
+class Player(Entity):
+    def on_awake(self, scene) -> None:
+        self.speed = 0.75
+        self.can_walk = True
+
+        idle_img = pygame.Surface((8, 8))
+        idle_img.fill((255, 255, 255))
+        idle = Animation(
+            "idle", [idle_img]
+        )
+        self.anim_add(idle)
+        self.anim_set("idle")
+
+        self.opacity = 1
+        self.display_opacity = self.opacity
+        self.hiding = False
+        self.back_hide_pos = None
+        self.flashlight = True
+
+        self.hide_cooldown_clock = Clock()
+        self.hide_cooldown_val = 2500
+
+    def on_update(self, scene) -> None:
+        if self.hiding:
+            self.opacity = 0
+            self.flashlight = False
+            self.can_walk = False
+        if not self.hiding:
+            self.opacity = 1
+            self.flashlight = True
+            self.target_position = self.back_hide_pos
+            self.can_walk = True
+
+        if self.target_position is not None:
+            if self.target_position == self.position:
+                self.target_position = None
+
+            elif self.target_position != self.position:
+                self.position.move_towards_ip(self.target_position, self.speed)
+
+        self.display_opacity = move_toward(
+            self.display_opacity, self.opacity, 0.05 * scene.client.delta_time
+        )
+
+        self.alpha = self.display_opacity * 255
+
+
 from data.scripts.player import Player
-from data.scripts.const import KEYBOARD, RANDOM_NOISE, RANDOM_NOISE_SIZE
-from data.scripts.window import Window
-from data.scripts.stalkerai import StalkerAI
-from data.scripts.random_noise import apply_noise
 
-import math
 import pygame
 import sys
 
+KEYBOARD = {
+    "up1": pygame.K_w,
+    "left1": pygame.K_a,
+    "down1": pygame.K_s,
+    "right1": pygame.K_d,
+    "up2": pygame.K_w,
+    "left2": pygame.K_a,
+    "down2": pygame.K_s,
+    "right2": pygame.K_d,
+    "A": pygame.K_z,
+    "B": pygame.K_x,
+    "X": None,
+    "Y": None,
+    "select": pygame.K_q,
+    "start": pygame.K_ESCAPE,
+}
+
+class PlayerController(BaseController):
+    def __init__(self) -> None:
+        super().__init__()
 
 class Test(Scene):
     def on_awake(self):
@@ -75,5 +140,6 @@ class Test(Scene):
         for e in self.entities:
             self.screen.blit(e.sprite, e.position + self.camera.position)
 
+        print(self.player.position)
         self.input()
         self.advance_frame()
