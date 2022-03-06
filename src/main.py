@@ -15,8 +15,9 @@ pygame.mixer.set_num_channels(64)
 
 from data.scenes.maintitle import MainTitle
 from data.scenes.mainworld import MainWorld
+from data.scenes.test import Test
 
-scenes = [MainTitle, MainWorld]
+scenes = [MainTitle, MainWorld, Test]
 scene_manager = SceneManager(client)
 for s in scenes:
     scene_manager.register_scene(s)
