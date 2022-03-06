@@ -28,8 +28,7 @@ class MainWorld(Scene):
         self.lightroom = LightRoom(self, size=self.g.surface.get_size())
         self.light_collisions = []
 
-        for r in self.g.collision_rects:
-            self.collision_rects.append(r)
+        self.collision_rects = self.g.collision_rects
 
         for r in self.g.light_col_rects:
             line = rect_to_lines(r)
@@ -79,19 +78,15 @@ class MainWorld(Scene):
                 if self.player.can_walk:
                     if event.key == KEYBOARD["left1"]:
                         controller.is_moving_left = False
-                        self.player.velocity.x = 0
 
                     if event.key == KEYBOARD["right1"]:
                         controller.is_moving_right = False
-                        self.player.velocity.x = 0
 
                     if event.key == KEYBOARD["up1"]:
                         controller.is_moving_up = False
-                        self.player.velocity.y = 0
 
                     if event.key == KEYBOARD["down1"]:
                         controller.is_moving_down = False
-                        self.player.velocity.y = 0
 
                 if event.key == KEYBOARD["select"]:
                     self.client.add_scene("Pause", exit_scene=self)
@@ -133,8 +128,6 @@ class MainWorld(Scene):
                         CLOSE_WINDOW_SOUND.play()
 
     def update(self):
-        self.input()
-
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
         self.screen.fill((0, 0, 0))
@@ -205,4 +198,5 @@ class MainWorld(Scene):
             for w in self.windows:
                 pygame.draw.rect(self.screen, (255, 0, 0), w.rect)
 
+        self.input()
         self.advance_frame()
