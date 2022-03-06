@@ -54,9 +54,6 @@ class Player(Entity):
 
         self.alpha = self.display_opacity * 255
 
-
-from data.scripts.player import Player
-
 import pygame
 import sys
 
