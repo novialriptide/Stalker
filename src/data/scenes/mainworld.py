@@ -1,6 +1,7 @@
 from SakuyaEngine.scene import Scene
 from SakuyaEngine.lights import LightRoom
 from SakuyaEngine.math import get_angle, rect_to_lines
+from SakuyaEngine.text import Font
 
 from data.scripts.controller import PlayerController
 from data.scripts.map_loader import GameMap
@@ -54,6 +55,9 @@ class MainWorld(Scene):
 
         # Stalker Setup
         self.stalkerai = StalkerAI(self.windows, 2000, 0.1)
+        
+        # Font Setup
+        self.font = Font(alphabet_path = "data/sprites/alphabet.png")
 
     def input(self) -> None:
         controller = self.controller
@@ -97,6 +101,7 @@ class MainWorld(Scene):
                 if self.player.hiding:
                     self.player.hide_cooldown_clock.reset()
                     self.player.hiding = False
+                    self.player.ignore_collisions = False
 
                 # Player Interactions
                 for obj in self.g.interact_objs:
@@ -177,7 +182,8 @@ class MainWorld(Scene):
         for obj in self.g.interact_objs:
             mp = self.client.mouse_pos
             if obj["rect"].collidepoint(mp - self.camera.position):
-                pygame.draw.rect(self.screen, (255, 255, 255), (mp.x, mp.y, 17, 6))
+                t = self.font.text("CLICK TO HIDE")
+                self.screen.blit(t, mp)
 
         self.player.velocity = self.player.speed * self.controller.movement
 
