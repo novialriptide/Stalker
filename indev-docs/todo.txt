@@ -1,11 +1,9 @@
 1. add button hints
 2. add cutscenes involving text messages
 3. add stalker entity
-4. add additional rooms
 5. add main menu
 6. implement pathfinding somehow
-7. make the lightroom bounding box be setable in the tiled mapeditor 
-
+7. add tasks
 
 
 
