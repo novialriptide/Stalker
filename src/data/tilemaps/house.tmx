@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="18" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="85">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="18" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="89">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="18" height="18">
   <data encoding="csv">
@@ -47,13 +47,13 @@
  </layer>
  <layer id="7" name="interact" width="18" height="18">
   <data encoding="csv">
-0,11,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,11,11,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -88,11 +88,6 @@
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="74" type="collision_rect" x="8" y="0" width="16" height="8">
-   <properties>
-    <property name="light_col" type="bool" value="false"/>
-   </properties>
-  </object>
   <object id="78" type="collision_rect" x="8" y="72" width="40" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
@@ -123,15 +118,30 @@
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="86" type="collision_rect" x="8" y="16" width="8" height="16">
+   <properties>
+    <property name="light_col" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="87" type="collision_rect" x="8" y="40" width="8" height="16">
+   <properties>
+    <property name="light_col" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="88" type="collision_rect" x="32" y="0" width="16" height="8">
+   <properties>
+    <property name="light_col" type="bool" value="false"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#3fa733" id="9" name="Windows">
-  <object id="76" type="window" x="28" y="0" width="28" height="9">
+  <object id="76" type="window" x="32" y="0" width="16" height="10">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="down"/>
    </properties>
   </object>
-  <object id="77" type="window" x="8" y="23" width="9" height="28">
+  <object id="77" type="window" x="8" y="40" width="10" height="15.875">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="right"/>
@@ -143,19 +153,12 @@
     <property name="window_dir" value="left"/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup color="#00f310" id="8" name="Event">
-  <object id="56" type="interact" x="8" y="0" width="8" height="8">
+  <object id="85" type="window" x="8" y="16" width="10" height="16">
    <properties>
-    <property name="cmd" value="hide"/>
-    <property name="hint" value="click to hide"/>
-   </properties>
-  </object>
-  <object id="67" type="interact" x="16" y="0" width="8" height="8">
-   <properties>
-    <property name="cmd" value="hide"/>
-    <property name="hint" value="click to hide"/>
+    <property name="light_dir" value="90"/>
+    <property name="window_dir" value="right"/>
    </properties>
   </object>
  </objectgroup>
+ <objectgroup color="#29bbff" id="8" name="Event"/>
 </map>
