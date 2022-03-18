@@ -8,7 +8,7 @@
 8. add footstep trail for stalker
 9. add footstep sound fx
 10. cutscene after every night you play with your dog and at the very second last night your dog is dead
-
+11. make it easier to see window light
 
 
 
