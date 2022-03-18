@@ -16,7 +16,7 @@ class Player(Entity):
         self.can_walk = True
 
         idle = Animation(
-            "idle", split_image(pygame.image.load("data/sprites/player.png"), 8, 8)
+            "idle", split_image(pygame.image.load("data/sprites/player.png"), 10, 10)
         )
         self.anim_add(idle)
         self.anim_set("idle")

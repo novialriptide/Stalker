@@ -146,16 +146,16 @@ class MainWorld(Scene):
         self.camera.position = -self.player.center_position + screen_size / 2
 
         # Draw Player Flashlight
-        if self.player.flashlight:
-            dir = math.degrees(
-                get_angle(
-                    self.player.position + self.camera.position, self.client.mouse_pos
-                )
+        player_dir = math.degrees(
+            get_angle(
+                self.player.center_position + self.camera.position, self.client.mouse_pos
             )
+        )
+        if self.player.flashlight:
             self.lightroom.draw_spot_light(
                 self.player.center_position,
                 60,
-                dir,
+                player_dir,
                 70,
                 collisions=self.light_collisions,
             )
@@ -164,6 +164,8 @@ class MainWorld(Scene):
                 15,
                 collisions=self.light_collisions,
             )
+        
+        self.player.angle = player_dir + 90
 
         # Draw Map
         map_surf = self.g.surface
@@ -189,7 +191,7 @@ class MainWorld(Scene):
 
         # Draw Entities
         for e in self.entities:
-            self.screen.blit(e.sprite, e.position + self.camera.position)
+            self.screen.blit(e.sprite, e.abs_position + self.camera.position)
         
         apply_noise(self)
 
