@@ -126,7 +126,7 @@ class MainWorld(Scene):
                     )
                     if (
                         rect.collidepoint(self.client.mouse_pos - self.camera.position)
-                        and dist <= self.PX_INTERACT_MIN_DISTANCE
+                        and dist <= self.PX_INTERACT_MIN_DISTANCE and w.open_percent > 0
                     ):
                         CMDS["close_win"](player=self.player, rect=rect, window=w)
                         self.stalkerai.current_window = None
