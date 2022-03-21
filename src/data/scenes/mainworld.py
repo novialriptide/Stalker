@@ -55,9 +55,9 @@ class MainWorld(Scene):
 
         # Stalker Setup
         self.stalkerai = StalkerAI(self.windows, 2000, 0.1)
-        
+
         # Font Setup
-        self.font = Font(alphabet_path = "data/sprites/alphabet.png")
+        self.font = Font(alphabet_path="data/sprites/alphabet.png")
 
     def input(self) -> None:
         controller = self.controller
@@ -126,7 +126,8 @@ class MainWorld(Scene):
                     )
                     if (
                         rect.collidepoint(self.client.mouse_pos - self.camera.position)
-                        and dist <= self.PX_INTERACT_MIN_DISTANCE and w.open_percent > 0
+                        and dist <= self.PX_INTERACT_MIN_DISTANCE
+                        and w.open_percent > 0
                     ):
                         CMDS["close_win"](player=self.player, rect=rect, window=w)
                         self.stalkerai.current_window = None
@@ -148,7 +149,8 @@ class MainWorld(Scene):
         # Draw Player Flashlight
         player_dir = math.degrees(
             get_angle(
-                self.player.center_position + self.camera.position, self.client.mouse_pos
+                self.player.center_position + self.camera.position,
+                self.client.mouse_pos,
             )
         )
         if self.player.flashlight:
@@ -166,7 +168,7 @@ class MainWorld(Scene):
                 collisions=self.light_collisions,
                 color=(166, 255, 0, 25),
             )
-        
+
         self.player.angle = player_dir + 90
 
         # Draw Map
@@ -194,7 +196,7 @@ class MainWorld(Scene):
         # Draw Entities
         for e in self.entities:
             self.screen.blit(e.sprite, e.abs_position + self.camera.position)
-        
+
         apply_noise(self)
 
         # Debug Collisions

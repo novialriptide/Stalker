@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="18" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="95">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="18" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="95">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="18" height="18">
   <data encoding="csv">
@@ -146,7 +146,7 @@
     <property name="window_dir" value="down"/>
    </properties>
   </object>
-  <object id="77" type="window" x="8" y="40" width="10" height="15.875">
+  <object id="77" type="window" x="8" y="40" width="10" height="16">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="right"/>

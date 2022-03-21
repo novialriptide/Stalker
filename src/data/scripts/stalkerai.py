@@ -19,18 +19,21 @@ class StalkerAI:
 
         self.cooldown_clock = Clock()
         self.runtime_clock = Clock()
-        
+
         self.current_window = None
 
     def choose(self) -> Window:
         return random.choice(self.windows)
-    
+
     def open_window(self, window: Window) -> None:
         window.open_percent = 1
         OPEN_WINDOW_SOUND.play()
 
     def update(self) -> None:
-        if self.cooldown_clock.get_time() >= self.choice_cooldown and self.current_window is None:
+        if (
+            self.cooldown_clock.get_time() >= self.choice_cooldown
+            and self.current_window is None
+        ):
             self.cooldown_clock.reset()
             if self.choice_percent >= random.random():
                 window_choice = self.choose()

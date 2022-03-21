@@ -15,9 +15,7 @@ class Player(Entity):
 
         idle_img = pygame.Surface((8, 8))
         idle_img.fill((255, 255, 255))
-        idle = Animation(
-            "idle", [idle_img]
-        )
+        idle = Animation("idle", [idle_img])
         self.anim_add(idle)
         self.anim_set("idle")
 
@@ -54,6 +52,7 @@ class Player(Entity):
 
         self.alpha = self.display_opacity * 255
 
+
 import pygame
 import sys
 
@@ -74,17 +73,17 @@ KEYBOARD = {
     "start": pygame.K_ESCAPE,
 }
 
+
 class PlayerController(BaseController):
     def __init__(self) -> None:
         super().__init__()
+
 
 class Test(Scene):
     def on_awake(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
-        self.collision_rects = [
-            pygame.Rect(30, 30, 50, 50)
-        ]
+        self.collision_rects = [pygame.Rect(30, 30, 50, 50)]
 
         # Player Setup
         self.player = Player()
@@ -129,10 +128,10 @@ class Test(Scene):
         self.screen.fill((0, 0, 0))
 
         self.player.velocity = self.player.speed * self.controller.movement
-        
+
         for c in self.collision_rects:
             pygame.draw.rect(self.screen, (255, 0, 0), c)
-        
+
         # Draw Entities
         for e in self.entities:
             self.screen.blit(e.sprite, e.position + self.camera.position)

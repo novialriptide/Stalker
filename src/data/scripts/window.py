@@ -79,7 +79,7 @@ class Window:
         speed = self.open_speed
         if self.display_open_percent - self.open_percent > 0:
             speed = self.close_speed
-        
+
         self.display_open_percent = move_toward(
             self.display_open_percent, self.open_percent, speed * delta_time
         )
