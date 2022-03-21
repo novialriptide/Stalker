@@ -158,11 +158,13 @@ class MainWorld(Scene):
                 player_dir,
                 70,
                 collisions=self.light_collisions,
+                color=(166, 255, 0, 25),
             )
             self.lightroom.draw_point_light(
                 self.player.center_position + pygame.Vector2(1, 1),
                 15,
                 collisions=self.light_collisions,
+                color=(166, 255, 0, 25),
             )
         
         self.player.angle = player_dir + 90
