@@ -41,6 +41,8 @@ class MainWorld(Scene):
         self.player.position = screen_size / 3
         self.add_entity(self.player)
         self.controller = PlayerController()
+        self.homework_progress = Clock(pause_upon_start = True)
+        self.night_progress = Clock(pause_upon_start = False)
 
         # Load Windows
         self.windows = []
@@ -58,7 +60,7 @@ class MainWorld(Scene):
         self.stalkerai = StalkerAI(self.windows, 2000, 0.1)
 
         # Font Setup
-        self.font = Font(alphabet_path="data/sprites/alphabet.png")
+        self.font = Font(alphabet_path="data/sprites/alphabet.png", numbers_path="data/sprites/numbers.png")
 
     def input(self) -> None:
         controller = self.controller
@@ -199,6 +201,11 @@ class MainWorld(Scene):
             self.screen.blit(e.sprite, e.abs_position + self.camera.position)
 
         apply_noise(self)
+        
+        # Draw Clock
+        time_val = self.night_progress.get_time()
+        time_surf = self.font.text(str(int(time_val)))
+        self.screen.blit(time_surf, (0, 0))
 
         # Debug Collisions
         if self.draw_debug_collisions:
