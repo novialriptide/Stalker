@@ -2,15 +2,16 @@ from SakuyaEngine.scene import Scene
 from SakuyaEngine.lights import LightRoom
 from SakuyaEngine.math import get_angle, rect_to_lines
 from SakuyaEngine.text import Font
+from SakuyaEngine.clock import Clock
 
+from data.scripts.const import KEYBOARD, CLOSE_WINDOW_SOUND
 from data.scripts.controller import PlayerController
+from data.scripts.random_noise import apply_noise
+from data.scripts.stalkerai import StalkerAI
 from data.scripts.map_loader import GameMap
 from data.scripts.map_cmds import CMDS
 from data.scripts.player import Player
-from data.scripts.const import KEYBOARD, CLOSE_WINDOW_SOUND
 from data.scripts.window import Window
-from data.scripts.stalkerai import StalkerAI
-from data.scripts.random_noise import apply_noise
 
 import math
 import pygame
