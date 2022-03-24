@@ -197,9 +197,10 @@
     <property name="cmd" value="check_inside"/>
    </properties>
   </object>
-  <object id="96" x="41" y="104" width="14" height="7">
+  <object id="96" type="interact" x="41" y="104" width="14" height="7">
    <properties>
-    <property name="cmd" value="check_inside"/>
+    <property name="cmd" value="do_homework"/>
+    <property name="hint" value="CLICK TO DO HOMEWORK"/>
    </properties>
   </object>
  </objectgroup>
