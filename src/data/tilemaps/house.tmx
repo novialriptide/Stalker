@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="18" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="95">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="18" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="97">
  <tileset firstgid="1" source="house_tileset.tsx"/>
  <layer id="1" name="base" width="18" height="18">
   <data encoding="csv">
@@ -164,6 +164,12 @@
     <property name="window_dir" value="right"/>
    </properties>
   </object>
+  <object id="95" type="window" x="102" y="32" width="10" height="16">
+   <properties>
+    <property name="light_dir" value="90"/>
+    <property name="window_dir" value="left"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#29bbff" id="8" name="Event">
   <object id="89" x="96" y="0" width="16" height="16">
@@ -187,6 +193,11 @@
    </properties>
   </object>
   <object id="93" x="8" y="88" width="8" height="16">
+   <properties>
+    <property name="cmd" value="check_inside"/>
+   </properties>
+  </object>
+  <object id="96" x="41" y="104" width="14" height="7">
    <properties>
     <property name="cmd" value="check_inside"/>
    </properties>
