@@ -9,7 +9,7 @@ from data.scripts.controller import PlayerController
 from data.scripts.random_noise import apply_noise
 from data.scripts.stalkerai import StalkerAI
 from data.scripts.map_loader import GameMap
-from data.scripts.map_cmds import CMDS
+from data.scripts.map_cmds import *
 from data.scripts.player import Player
 from data.scripts.window import Window
 
@@ -41,6 +41,8 @@ class MainWorld(Scene):
         self.player.position = screen_size / 3
         self.add_entity(self.player)
         self.controller = PlayerController()
+        self.homework_quota = 25000
+        self.doing_homework = False
         self.homework_progress = Clock(pause_upon_start = True)
         self.night_progress = Clock(pause_upon_start = False)
 
@@ -100,12 +102,6 @@ class MainWorld(Scene):
                     self.pause()
 
             if event.type == pygame.MOUSEBUTTONUP:
-                # Escape hide mode
-                if self.player.hiding:
-                    self.player.hide_cooldown_clock.reset()
-                    self.player.hiding = False
-                    self.player.ignore_collisions = False
-
                 # Player Interactions
                 for obj in self.g.interact_objs:
                     rect = obj["rect"]
@@ -118,7 +114,7 @@ class MainWorld(Scene):
                         rect.collidepoint(self.client.mouse_pos - self.camera.position)
                         and dist <= self.PX_INTERACT_MIN_DISTANCE
                     ):
-                        CMDS[obj["cmd"]](player=self.player, rect=rect)
+                        CMDS[obj["cmd"]](player=self.player, rect=rect, scene=self)
 
                 for w in self.windows:
                     rect = w.rect
@@ -132,7 +128,7 @@ class MainWorld(Scene):
                         and dist <= self.PX_INTERACT_MIN_DISTANCE
                         and w.open_percent > 0
                     ):
-                        CMDS["close_win"](player=self.player, rect=rect, window=w)
+                        close_window(player=self.player, rect=rect, window=w)
                         self.stalkerai.current_window = None
                         CLOSE_WINDOW_SOUND.play()
 
@@ -166,7 +162,7 @@ class MainWorld(Scene):
                 color=(166, 255, 0, 25),
             )
             self.lightroom.draw_point_light(
-                self.player.center_position + pygame.Vector2(1, 1),
+                self.player.center_position,
                 15,
                 collisions=self.light_collisions,
                 color=(166, 255, 0, 25),
@@ -191,8 +187,8 @@ class MainWorld(Scene):
         for obj in self.g.interact_objs:
             mp = self.client.mouse_pos
             if obj["rect"].collidepoint(mp - self.camera.position):
-                t = self.font.text("CLICK TO HIDE")
-                self.screen.blit(t, mp)
+                t = self.font.text(obj["hint"])
+                self.screen.blit(t, (screen_size.x / 2 - t.get_width() / 2, screen_size.y * 2 / 3))
 
         self.player.velocity = self.player.speed * self.controller.movement
 
@@ -204,8 +200,22 @@ class MainWorld(Scene):
         
         # Draw Clock
         time_val = self.night_progress.get_time()
-        time_surf = self.font.text(str(int(time_val)))
+        time_surf = self.font.text(f"{int(time_val / 1000 / 60 + 1)} AM")
         self.screen.blit(time_surf, (0, 0))
+        
+        # Homework Progress
+        time_val = self.homework_progress.get_time()
+        time_surf = self.font.text(f"{int(time_val * 10 / self.homework_quota)}") # make this into a bar
+        self.screen.blit(time_surf, (0, 5))
+        
+        if self.player.velocity.magnitude() > 0:
+            self.doing_homework = False
+        
+        if self.doing_homework:
+            self.homework_progress.resume()
+
+        if not self.doing_homework:
+            self.homework_progress.pause()
 
         # Debug Collisions
         if self.draw_debug_collisions:
