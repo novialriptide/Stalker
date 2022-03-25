@@ -3,6 +3,7 @@ from SakuyaEngine.lights import LightRoom
 from SakuyaEngine.math import get_angle, rect_to_lines
 from SakuyaEngine.text import Font
 from SakuyaEngine.clock import Clock
+from SakuyaEngine.bar import Bar
 
 from data.scripts.const import KEYBOARD, CLOSE_WINDOW_SOUND, HOMEWORK_PROGRESS_SOUND, WHITE_NOISE_SOUND
 from data.scripts.controller import PlayerController
@@ -44,6 +45,7 @@ class MainWorld(Scene):
         self.homework_quota = 25000
         self.doing_homework = False
         self.homework_progress = Clock(pause_upon_start = True)
+        self.homework_bar = Bar(32, 4)
         self.night_progress = Clock(pause_upon_start = False)
         
         # Sound Setup
@@ -204,14 +206,20 @@ class MainWorld(Scene):
         
         # Draw Clock
         time_val = self.night_progress.get_time()
-        time_surf = self.font.text(f"{int(time_val / 1000 / 60 + 1)} AM")
+        time_surf = self.font.text(f"{int(time_val / 1000 / 60 + 1)}AM")
         self.screen.blit(time_surf, (0, 0))
         
         # Homework Progress
-        time_val = self.homework_progress.get_time()
-        time_surf = self.font.text(f"{int(time_val * 10 / self.homework_quota)}") # make this into a bar
-        self.screen.blit(time_surf, (0, 5))
-        
+        prog_val = self.homework_progress.get_time()
+        homework_prog = int(prog_val * 10 / self.homework_quota)
+        prog_text_surf = self.font.text(f"{homework_prog}")
+        self.screen.blit(prog_text_surf, (0, 6))
+        prog_text_surf_width = prog_text_surf.get_width()
+        pygame.draw.rect(self.screen, (200, 200, 200), [prog_text_surf_width + 1, 6, self.homework_bar.max_val, 5])
+        pygame.draw.rect(self.screen, (255, 255, 255), [prog_text_surf_width + 1, 6, self.homework_bar.display_val, 5])
+        self.homework_bar.current_val = int(prog_val * 10 / self.homework_quota) / 100 * self.homework_bar.max_val
+        self.homework_bar.update(self.client.delta_time)
+
         if self.player.velocity.magnitude() > 0:
             self.doing_homework = False
         
