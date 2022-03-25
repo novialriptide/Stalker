@@ -4,7 +4,7 @@ from SakuyaEngine.math import get_angle, rect_to_lines
 from SakuyaEngine.text import Font
 from SakuyaEngine.clock import Clock
 
-from data.scripts.const import KEYBOARD, CLOSE_WINDOW_SOUND
+from data.scripts.const import KEYBOARD, CLOSE_WINDOW_SOUND, HOMEWORK_PROGRESS_SOUND
 from data.scripts.controller import PlayerController
 from data.scripts.random_noise import apply_noise
 from data.scripts.stalkerai import StalkerAI
@@ -45,6 +45,7 @@ class MainWorld(Scene):
         self.doing_homework = False
         self.homework_progress = Clock(pause_upon_start = True)
         self.night_progress = Clock(pause_upon_start = False)
+        self.homework_sound_channel = None
 
         # Load Windows
         self.windows = []
@@ -213,6 +214,8 @@ class MainWorld(Scene):
         
         if self.doing_homework:
             self.homework_progress.resume()
+            if self.homework_sound_channel is None or not self.homework_sound_channel.get_busy():
+                self.homework_sound_channel = HOMEWORK_PROGRESS_SOUND.play()
 
         if not self.doing_homework:
             self.homework_progress.pause()
