@@ -12,7 +12,7 @@ import pygame
 
 class Player(Entity):
     def on_awake(self, scene) -> None:
-        self.speed = 0.75
+        self.speed = 0.5
         self.can_walk = True
 
         idle = Animation(
