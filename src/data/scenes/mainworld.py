@@ -12,6 +12,7 @@ from data.scripts.stalkerai import StalkerAI
 from data.scripts.map_loader import GameMap
 from data.scripts.map_cmds import *
 from data.scripts.player import Player
+from data.scripts.stalker import Stalker
 from data.scripts.window import Window
 
 import math
@@ -47,6 +48,12 @@ class MainWorld(Scene):
         self.homework_progress = Clock(pause_upon_start = True)
         self.homework_bar = Bar(32, 4)
         self.night_progress = Clock(pause_upon_start = False)
+
+        # Stalker Setup
+        self.stalker = Stalker()
+        self.stalker.position = pygame.Vector2(-1000, -1000)
+        self.add_entity(self.stalker)
+        
         
         # Sound Setup
         WHITE_NOISE_SOUND.play(loops=-1)
@@ -138,6 +145,11 @@ class MainWorld(Scene):
                         close_window(player=self.player, rect=rect, window=w)
                         self.stalkerai.current_window = None
                         CLOSE_WINDOW_SOUND.play()
+
+    def is_exposed(self):
+        for w in self.windows:
+            if w.display_open_percent == 1:
+                print("ur fucked lol")
 
     def update(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
@@ -231,6 +243,8 @@ class MainWorld(Scene):
 
         if not self.doing_homework:
             self.homework_progress.pause()
+            
+        self.is_exposed()
         
         # Footsteps
         if self.player.velocity.magnitude() > 0:
