@@ -5,7 +5,7 @@ from SakuyaEngine.text import Font
 from SakuyaEngine.clock import Clock
 from SakuyaEngine.bar import Bar
 
-from data.scripts.const import KEYBOARD, CLOSE_WINDOW_SOUND, HOMEWORK_PROGRESS_SOUND, WHITE_NOISE_SOUND
+from data.scripts.const import FOOTSTEP1, KEYBOARD, CLOSE_WINDOW_SOUND, HOMEWORK_PROGRESS_SOUND, WHITE_NOISE_SOUND
 from data.scripts.controller import PlayerController
 from data.scripts.random_noise import apply_noise
 from data.scripts.stalkerai import StalkerAI
@@ -50,6 +50,7 @@ class MainWorld(Scene):
         
         # Sound Setup
         WHITE_NOISE_SOUND.play(loops=-1)
+        self.footstep_clock = Clock()
         self.homework_sound_channel = None
 
         # Load Windows
@@ -230,6 +231,17 @@ class MainWorld(Scene):
 
         if not self.doing_homework:
             self.homework_progress.pause()
+        
+        # Footsteps
+        if self.player.velocity.magnitude() > 0:
+            self.footstep_clock.resume()
+        else:
+            self.footstep_clock.pause()
+            self.footstep_clock.set_time(500)
+        
+        if self.footstep_clock.get_time() > 500 and self.player.velocity.magnitude() > 0:
+            FOOTSTEP1.play()
+            self.footstep_clock.reset()
 
         # Debug Collisions
         if self.draw_debug_collisions:
