@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="18" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="10" nextobjectid="98">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="18" height="19" tilewidth="8" tileheight="8" infinite="0" nextlayerid="11" nextobjectid="98">
  <tileset firstgid="1" source="house_tileset.tsx"/>
- <layer id="1" name="base" width="18" height="18">
+ <tileset firstgid="21" source="dev_tileset.tsx"/>
+ <layer id="1" name="base" width="18" height="19">
   <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,13,13,13,13,13,13,13,13,0,1,1,1,1,0,0,0,0,
 0,13,12,13,13,13,13,12,13,0,1,1,1,1,0,0,0,0,
 0,13,12,12,13,13,12,12,13,0,1,1,1,1,0,0,0,0,
@@ -23,8 +25,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="5" name="walls" width="18" height="18">
+ <layer id="5" name="walls" width="18" height="19">
   <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,8,9,9,9,9,9,9,7,0,8,9,9,7,0,0,0,0,
 0,10,0,0,0,0,0,0,5,0,10,0,0,5,0,0,0,0,
 0,10,0,0,0,0,0,0,5,0,10,0,0,5,0,0,0,0,
@@ -45,8 +48,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="interact" width="18" height="18">
+ <layer id="7" name="interact" width="18" height="19">
   <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,11,11,0,0,0,0,11,0,14,15,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,19,20,0,0,0,0,
 0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -67,109 +71,132 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <layer id="10" name="astarpy" width="18" height="19">
+  <data encoding="csv">
+21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,21,0,0,0,
+21,0,0,0,0,0,0,0,0,21,21,21,21,21,21,0,0,0,
+21,21,21,21,21,21,0,0,21,21,0,0,0,0,0,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,
+21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,
+21,21,21,21,21,21,21,21,21,21,0,0,0,0,0,0,0,0
+</data>
+ </layer>
  <objectgroup color="#aa0000" id="4" name="Physics Collision">
-  <object id="6" type="collision_rect" x="0" y="-8" width="8" height="152">
+  <object id="6" type="collision_rect" x="0" y="0" width="8" height="152">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="10" type="collision_rect" x="8" y="-8" width="112" height="8">
+  <object id="10" type="collision_rect" x="8" y="0" width="112" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="11" type="collision_rect" x="72" y="40" width="8" height="104">
+  <object id="11" type="collision_rect" x="72" y="48" width="8" height="104">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="12" type="collision_rect" x="64" y="72" width="8" height="8">
+  <object id="12" type="collision_rect" x="64" y="80" width="8" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="78" type="collision_rect" x="8" y="72" width="40" height="8">
+  <object id="78" type="collision_rect" x="8" y="80" width="40" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="79" type="collision_rect" x="8" y="136" width="64" height="8">
+  <object id="79" type="collision_rect" x="8" y="144" width="64" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="80" type="collision_rect" x="32" y="96" width="40" height="8">
+  <object id="80" type="collision_rect" x="32" y="104" width="40" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="82" type="collision_rect" x="72" y="-8" width="8" height="32">
+  <object id="82" type="collision_rect" x="72" y="0" width="8" height="32">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="83" type="collision_rect" x="112" y="-8" width="8" height="80">
+  <object id="83" type="collision_rect" x="112" y="0" width="8" height="80">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="84" type="collision_rect" x="72" y="64" width="48" height="8">
+  <object id="84" type="collision_rect" x="72" y="72" width="48" height="8">
    <properties>
     <property name="light_col" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="86" type="collision_rect" x="8" y="16" width="8" height="16">
+  <object id="86" type="collision_rect" x="8" y="24" width="8" height="16">
    <properties>
     <property name="light_col" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="87" type="collision_rect" x="8" y="40" width="8" height="16">
+  <object id="87" type="collision_rect" x="8" y="48" width="8" height="16">
    <properties>
     <property name="light_col" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="88" type="collision_rect" x="32" y="0" width="16" height="8">
+  <object id="88" type="collision_rect" x="32" y="8" width="16" height="8">
    <properties>
     <property name="light_col" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="94" type="collision_rect" x="8" y="88" width="8" height="16">
+  <object id="94" type="collision_rect" x="8" y="96" width="8" height="16">
    <properties>
     <property name="light_col" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="97" type="collision_rect" x="41" y="104" width="14" height="7">
+  <object id="97" type="collision_rect" x="41" y="112" width="14" height="7">
    <properties>
     <property name="light_col" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup color="#3fa733" id="9" name="Windows">
-  <object id="76" type="window" x="32" y="0" width="16" height="10">
+  <object id="76" type="window" x="32" y="8" width="16" height="10">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="down"/>
    </properties>
   </object>
-  <object id="77" type="window" x="8" y="40" width="10" height="16">
+  <object id="77" type="window" x="8" y="48" width="10" height="16">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="right"/>
    </properties>
   </object>
-  <object id="81" type="window" x="63" y="114" width="9" height="14">
+  <object id="81" type="window" x="63" y="122" width="9" height="14">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="left"/>
    </properties>
   </object>
-  <object id="85" type="window" x="8" y="16" width="10" height="16">
+  <object id="85" type="window" x="8" y="24" width="10" height="16">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="right"/>
    </properties>
   </object>
-  <object id="95" type="window" x="102" y="32" width="10" height="16">
+  <object id="95" type="window" x="102" y="40" width="10" height="16">
    <properties>
     <property name="light_dir" value="90"/>
     <property name="window_dir" value="left"/>
@@ -177,32 +204,32 @@
   </object>
  </objectgroup>
  <objectgroup color="#29bbff" id="8" name="Event">
-  <object id="89" x="96" y="0" width="16" height="16">
+  <object id="89" x="96" y="8" width="16" height="16">
    <properties>
     <property name="cmd" value="grab_plank"/>
    </properties>
   </object>
-  <object id="90" x="32" y="0" width="16" height="8">
+  <object id="90" x="32" y="8" width="16" height="8">
    <properties>
     <property name="cmd" value="check_inside"/>
    </properties>
   </object>
-  <object id="91" x="8" y="16" width="8" height="16">
+  <object id="91" x="8" y="24" width="8" height="16">
    <properties>
     <property name="cmd" value="check_inside"/>
    </properties>
   </object>
-  <object id="92" x="8" y="40" width="8" height="16">
+  <object id="92" x="8" y="48" width="8" height="16">
    <properties>
     <property name="cmd" value="check_inside"/>
    </properties>
   </object>
-  <object id="93" x="8" y="88" width="8" height="16">
+  <object id="93" x="8" y="96" width="8" height="16">
    <properties>
     <property name="cmd" value="check_inside"/>
    </properties>
   </object>
-  <object id="96" type="interact" x="41" y="104" width="14" height="7">
+  <object id="96" type="interact" x="41" y="112" width="14" height="7">
    <properties>
     <property name="cmd" value="do_homework"/>
     <property name="hint" value="CLICK TO DO HOMEWORK"/>
