@@ -29,7 +29,7 @@ class MainWorld(Scene):
 
         # Map Setup
         self.g = GameMap("data/tilemaps/house.tmx")
-        self.lightroom = LightRoom(self, size=self.g.surface.get_size())
+        self.lightroom = LightRoom(self, force_size=self.g.surface.get_size())
         self.light_collisions = []
 
         self.collision_rects = self.g.collision_rects
