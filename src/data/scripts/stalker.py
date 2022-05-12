@@ -5,6 +5,7 @@ from SakuyaEngine.animation import Animation
 
 import pygame
 
+
 class Stalker(Entity):
     def on_awake(self, scene) -> None:
         self.speed = 0.5

@@ -5,7 +5,13 @@ from SakuyaEngine.text import Font
 from SakuyaEngine.clock import Clock
 from SakuyaEngine.bar import Bar
 
-from data.scripts.const import FOOTSTEP1, KEYBOARD, CLOSE_WINDOW_SOUND, HOMEWORK_PROGRESS_SOUND, WHITE_NOISE_SOUND
+from data.scripts.const import (
+    FOOTSTEP1,
+    KEYBOARD,
+    CLOSE_WINDOW_SOUND,
+    HOMEWORK_PROGRESS_SOUND,
+    WHITE_NOISE_SOUND,
+)
 from data.scripts.controller import PlayerController
 from data.scripts.random_noise import apply_noise
 from data.scripts.stalkerai import StalkerAI
@@ -45,16 +51,15 @@ class MainWorld(Scene):
         self.controller = PlayerController()
         self.homework_quota = 25000
         self.doing_homework = False
-        self.homework_progress = Clock(pause_upon_start = True)
+        self.homework_progress = Clock(pause_upon_start=True)
         self.homework_bar = Bar(32, 4)
-        self.night_progress = Clock(pause_upon_start = False)
+        self.night_progress = Clock(pause_upon_start=False)
 
         # Stalker Setup
         self.stalker = Stalker()
         self.stalker.position = pygame.Vector2(-1000, -1000)
         self.add_entity(self.stalker)
-        
-        
+
         # Sound Setup
         WHITE_NOISE_SOUND.play(loops=-1)
         self.footstep_clock = Clock()
@@ -76,7 +81,10 @@ class MainWorld(Scene):
         self.stalkerai = StalkerAI(self.windows, 2000, 0.1)
 
         # Font Setup
-        self.font = Font(alphabet_path="data/sprites/alphabet.png", numbers_path="data/sprites/numbers.png")
+        self.font = Font(
+            alphabet_path="data/sprites/alphabet.png",
+            numbers_path="data/sprites/numbers.png",
+        )
 
     def input(self) -> None:
         controller = self.controller
@@ -207,7 +215,9 @@ class MainWorld(Scene):
             mp = self.client.mouse_pos
             if obj["rect"].collidepoint(mp - self.camera.position):
                 t = self.font.text(obj["hint"])
-                self.screen.blit(t, (screen_size.x / 2 - t.get_width() / 2, screen_size.y * 2 / 3))
+                self.screen.blit(
+                    t, (screen_size.x / 2 - t.get_width() / 2, screen_size.y * 2 / 3)
+                )
 
         self.player.velocity = self.player.speed * self.controller.movement
 
@@ -216,44 +226,60 @@ class MainWorld(Scene):
             self.screen.blit(e.sprite, e.abs_position + self.camera.position)
 
         apply_noise(self)
-        
+
         # Draw Clock
         time_val = self.night_progress.get_time()
         time_surf = self.font.text(f"{int(time_val / 1000 / 60 + 1)}AM")
         self.screen.blit(time_surf, (0, 0))
-        
+
         # Homework Progress
         prog_val = self.homework_progress.get_time()
         homework_prog = int(prog_val * 10 / self.homework_quota)
         prog_text_surf = self.font.text(f"{homework_prog}")
         self.screen.blit(prog_text_surf, (0, 6))
         prog_text_surf_width = prog_text_surf.get_width()
-        pygame.draw.rect(self.screen, (200, 200, 200), [prog_text_surf_width + 1, 6, self.homework_bar.max_val, 5])
-        pygame.draw.rect(self.screen, (255, 255, 255), [prog_text_surf_width + 1, 6, self.homework_bar.display_val, 5])
-        self.homework_bar.current_val = int(prog_val * 10 / self.homework_quota) / 100 * self.homework_bar.max_val
+        pygame.draw.rect(
+            self.screen,
+            (200, 200, 200),
+            [prog_text_surf_width + 1, 6, self.homework_bar.max_val, 5],
+        )
+        pygame.draw.rect(
+            self.screen,
+            (255, 255, 255),
+            [prog_text_surf_width + 1, 6, self.homework_bar.display_val, 5],
+        )
+        self.homework_bar.current_val = (
+            int(prog_val * 10 / self.homework_quota) / 100 * self.homework_bar.max_val
+        )
         self.homework_bar.update(self.client.delta_time)
 
         if self.player.velocity.magnitude() > 0:
             self.doing_homework = False
-        
+
         if self.doing_homework:
             self.homework_progress.resume()
-            if self.homework_sound_channel is None or not self.homework_sound_channel.get_busy():
+            if (
+                self.homework_sound_channel is None
+                or not self.homework_sound_channel.get_busy()
+            ):
                 self.homework_sound_channel = HOMEWORK_PROGRESS_SOUND.play()
 
         if not self.doing_homework:
             self.homework_progress.pause()
-            
+
         self.is_exposed()
-        
+
         # Footsteps
         if self.player.velocity.magnitude() > 0:
             self.footstep_clock.resume()
         else:
             self.footstep_clock.pause()
             self.footstep_clock.set_time(500)
-        
-        if self.footstep_clock.get_time() > 500 and self.player.velocity.magnitude() > 0:
+
+        if (
+            self.footstep_clock.get_time() > 500
+            and self.player.velocity.magnitude() > 0
+        ):
             FOOTSTEP1.play()
             self.footstep_clock.reset()
 
