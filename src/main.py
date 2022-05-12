@@ -1,10 +1,8 @@
 import argparse
 import pygame
+import SakuyaEngine as engine
 
-from SakuyaEngine.client import Client
-from SakuyaEngine.scene import SceneManager
-
-client = Client(
+client = engine.Client(
     f"Stay Alert",
     pygame.Vector2(128, 112),
     mouse_image=pygame.image.load("data/sprites/mouse_pointer.png"),
@@ -18,7 +16,7 @@ from data.scenes.mainworld import MainWorld
 from test import Test
 
 scenes = [MainTitle, MainWorld, Test]
-scene_manager = SceneManager(client)
+scene_manager = engine.SceneManager(client)
 for s in scenes:
     scene_manager.register_scene(s)
 

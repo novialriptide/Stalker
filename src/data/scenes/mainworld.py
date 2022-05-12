@@ -1,10 +1,3 @@
-from SakuyaEngine.scene import Scene
-from SakuyaEngine.lights import LightRoom
-from SakuyaEngine.math import get_angle, rect_to_lines
-from SakuyaEngine.text import Font
-from SakuyaEngine.clock import Clock
-from SakuyaEngine.bar import Bar
-
 from data.scripts.const import (
     FOOTSTEP1,
     KEYBOARD,
@@ -24,9 +17,10 @@ from data.scripts.window import Window
 import math
 import pygame
 import sys
+import SakuyaEngine as engine
 
 
-class MainWorld(Scene):
+class MainWorld(engine.Scene):
     def on_awake(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
@@ -35,13 +29,13 @@ class MainWorld(Scene):
 
         # Map Setup
         self.g = GameMap("data/tilemaps/house.tmx")
-        self.lightroom = LightRoom(self, force_size=self.g.surface.get_size())
+        self.lightroom = engine.LightRoom(self, force_size=self.g.surface.get_size())
         self.light_collisions = []
 
         self.collision_rects = self.g.collision_rects
 
         for r in self.g.light_col_rects:
-            line = rect_to_lines(r)
+            line = engine.rect_to_lines(r)
             self.light_collisions.extend(line)
 
         # Player Setup
@@ -52,8 +46,8 @@ class MainWorld(Scene):
         self.homework_quota = 25000
         self.doing_homework = False
         self.homework_progress = Clock(pause_upon_start=True)
-        self.homework_bar = Bar(32, 4)
-        self.night_progress = Clock(pause_upon_start=False)
+        self.homework_bar = engine.Bar(32, 4)
+        self.night_progress = engine.Clock(pause_upon_start=False)
 
         # Stalker Setup
         self.stalker = Stalker()
@@ -62,7 +56,7 @@ class MainWorld(Scene):
 
         # Sound Setup
         WHITE_NOISE_SOUND.play(loops=-1)
-        self.footstep_clock = Clock()
+        self.footstep_clock = engine.Clock()
         self.homework_sound_channel = None
 
         # Load Windows
@@ -72,7 +66,7 @@ class MainWorld(Scene):
                 if obj.type == "window":
                     self.windows.append(
                         Window(
-                            pygame.Rect(obj.x, obj.y, obj.width, obj.height),
+                            pygame.Rect(obj.x, obj.y, obj.width - 1, obj.height - 1),
                             obj.properties["window_dir"],
                         )
                     )
@@ -81,7 +75,7 @@ class MainWorld(Scene):
         self.stalkerai = StalkerAI(self.windows, 2000, 0.1)
 
         # Font Setup
-        self.font = Font(
+        self.font = engine.Font(
             alphabet_path="data/sprites/alphabet.png",
             numbers_path="data/sprites/numbers.png",
         )
@@ -174,7 +168,7 @@ class MainWorld(Scene):
 
         # Draw Player Flashlight
         player_dir = math.degrees(
-            get_angle(
+            engine.get_angle(
                 self.player.center_position + self.camera.position,
                 self.client.mouse_pos,
             )

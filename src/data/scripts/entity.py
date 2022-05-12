@@ -1,11 +1,9 @@
-from SakuyaEngine.entity import Entity
-
 from typing import List
 
 import pygame
+import SakuyaEngine as engine
 
-
-class Entity(Entity):
+class Entity(engine.Entity):
     def __init__(
         self,
         name: str = None,

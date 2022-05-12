@@ -1,6 +1,5 @@
-from SakuyaEngine.math import move_toward
-
 import pygame
+import SakuyaEngine as engine
 
 
 class Window:
@@ -80,6 +79,6 @@ class Window:
         if self.display_open_percent - self.open_percent > 0:
             speed = self.close_speed
 
-        self.display_open_percent = move_toward(
+        self.display_open_percent = engine.move_toward(
             self.display_open_percent, self.open_percent, speed * delta_time
         )

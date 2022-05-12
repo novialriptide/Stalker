@@ -1,13 +1,9 @@
-from SakuyaEngine.animation import Animation
-from SakuyaEngine.tile import split_image
-from SakuyaEngine.math import move_toward
-from SakuyaEngine.clock import Clock
-
 from .entity import Entity
 
 from typing import List
 
 import pygame
+import SakuyaEngine as engine
 
 
 class Player(Entity):
@@ -15,8 +11,8 @@ class Player(Entity):
         self.speed = 0.5
         self.can_walk = True
 
-        idle = Animation(
-            "idle", split_image(pygame.image.load("data/sprites/player.png"), 10, 10)
+        idle = engine.Animation(
+            "idle", engine.split_image(pygame.image.load("data/sprites/player.png"), 10, 10)
         )
         self.anim_add(idle)
         self.anim_set("idle")
@@ -27,7 +23,7 @@ class Player(Entity):
         self.back_hide_pos = None
         self.flashlight = True
 
-        self.hide_cooldown_clock = Clock()
+        self.hide_cooldown_clock = engine.Clock()
         self.hide_cooldown_val = 2500
 
     def on_update(self, scene) -> None:
@@ -48,7 +44,7 @@ class Player(Entity):
             elif self.target_position != self.position:
                 self.position.move_towards_ip(self.target_position, self.speed)
 
-        self.display_opacity = move_toward(
+        self.display_opacity = engine.move_toward(
             self.display_opacity, self.opacity, 0.05 * scene.client.delta_time
         )
 

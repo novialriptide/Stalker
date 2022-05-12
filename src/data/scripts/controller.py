@@ -1,6 +1,5 @@
-from SakuyaEngine.controllers import BaseController
+import SakuyaEngine as engine
 
-
-class PlayerController(BaseController):
+class PlayerController(engine.BaseController):
     def __init__(self) -> None:
         super().__init__()

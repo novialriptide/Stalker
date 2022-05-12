@@ -1,57 +1,16 @@
-from SakuyaEngine.scene import Scene
-from SakuyaEngine.controllers import BaseController
-from SakuyaEngine.animation import Animation
-from SakuyaEngine.entity import Entity
-from SakuyaEngine.math import move_toward
-from SakuyaEngine.clock import Clock
-
 import pygame
+import SakuyaEngine as engine
 
-
-class Player(Entity):
+class Player(engine.Entity):
     def on_awake(self, scene) -> None:
         self.speed = 0.75
         self.can_walk = True
 
         idle_img = pygame.Surface((8, 8))
         idle_img.fill((255, 255, 255))
-        idle = Animation("idle", [idle_img])
+        idle = engine.Animation("idle", [idle_img])
         self.anim_add(idle)
         self.anim_set("idle")
-
-        self.opacity = 1
-        self.display_opacity = self.opacity
-        self.hiding = False
-        self.back_hide_pos = None
-        self.flashlight = True
-
-        self.hide_cooldown_clock = Clock()
-        self.hide_cooldown_val = 2500
-
-    def on_update(self, scene) -> None:
-        if self.hiding:
-            self.opacity = 0
-            self.flashlight = False
-            self.can_walk = False
-        if not self.hiding:
-            self.opacity = 1
-            self.flashlight = True
-            self.target_position = self.back_hide_pos
-            self.can_walk = True
-
-        if self.target_position is not None:
-            if self.target_position == self.position:
-                self.target_position = None
-
-            elif self.target_position != self.position:
-                self.position.move_towards_ip(self.target_position, self.speed)
-
-        self.display_opacity = move_toward(
-            self.display_opacity, self.opacity, 0.05 * scene.client.delta_time
-        )
-
-        self.alpha = self.display_opacity * 255
-
 
 import pygame
 import sys
@@ -74,12 +33,12 @@ KEYBOARD = {
 }
 
 
-class PlayerController(BaseController):
+class PlayerController(engine.BaseController):
     def __init__(self) -> None:
         super().__init__()
 
 
-class Test(Scene):
+class Test(engine.Scene):
     def on_awake(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 

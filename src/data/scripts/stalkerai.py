@@ -1,9 +1,7 @@
-from tkinter.colorchooser import Chooser
 from typing import List
 
 import random
-
-from SakuyaEngine.clock import Clock
+import SakuyaEngine as engine
 
 from .window import Window
 from .const import OPEN_WINDOW_SOUND
@@ -17,8 +15,8 @@ class StalkerAI:
         self.choice_cooldown = choice_cooldown
         self.choice_percent = choice_percent
 
-        self.cooldown_clock = Clock()
-        self.runtime_clock = Clock()
+        self.cooldown_clock = engine.Clock()
+        self.runtime_clock = engine.Clock()
 
         self.current_window = None
 

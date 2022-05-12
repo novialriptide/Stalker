@@ -1,7 +1,7 @@
-from SakuyaEngine.scene import Scene
+import SakuyaEngine as engine
 
 
-class MainTitle(Scene):
+class MainTitle(engine.Scene):
     def on_awake(self, **kwargs) -> None:
         pass
 
