@@ -45,7 +45,7 @@ class MainWorld(engine.Scene):
         self.controller = PlayerController()
         self.homework_quota = 25000
         self.doing_homework = False
-        self.homework_progress = Clock(pause_upon_start=True)
+        self.homework_progress = engine.Clock(pause_upon_start=True)
         self.homework_bar = engine.Bar(32, 4)
         self.night_progress = engine.Clock(pause_upon_start=False)
 
