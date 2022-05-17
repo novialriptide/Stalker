@@ -19,6 +19,8 @@ import pygame
 import sys
 import SakuyaEngine as engine
 
+## stalker trioes to go through the floor to get into the house and the player needs to place a textbook ontop of
+# the floor to prevent him from getting inside. and occasionally the player needs the textbook to complete homework
 
 class MainWorld(engine.Scene):
     def on_awake(self):
@@ -43,6 +45,11 @@ class MainWorld(engine.Scene):
         self.player.position = screen_size / 3
         self.add_entity(self.player)
         self.controller = PlayerController()
+
+        # if None, textbook with player
+        # if Vector, textbook on floor
+        self.textbook_location = None
+
         self.homework_quota = 25000
         self.doing_homework = False
         self.homework_progress = engine.Clock(pause_upon_start=True)
