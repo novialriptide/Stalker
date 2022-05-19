@@ -26,11 +26,8 @@ class StalkerAI:
     def is_active(self) -> bool:
         return self.current_window or self.current_tile_break_pos
 
-    def choose(self) -> Window:
-        if self.window_choice_percent > random.random():
-            return random.choice(self.windows)
-        else:
-            return None
+    def choose_window(self) -> Window:
+        return random.choice(self.windows)
 
     def open_window(self, window: Window) -> None:
         window.open_percent = 1
@@ -43,8 +40,13 @@ class StalkerAI:
         ):
             self.cooldown_clock.reset()
             if self.choice_percent >= random.random():
-                window_choice = self.choose()
-                self.current_window = window_choice
-                return self.open_window(window_choice)
+                
+                if self.window_choice_percent >= random.random():
+                    window_choice = self.choose_window()
+                    self.current_window = window_choice
+                    return self.open_window(window_choice)
+
+                else:
+                    
 
         return None
