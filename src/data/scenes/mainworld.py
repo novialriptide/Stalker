@@ -1,4 +1,5 @@
 from data.scripts.const import (
+    FLOOR_BREAK_TEXTURE,
     FOOTSTEP1,
     KEYBOARD,
     CLOSE_WINDOW_SOUND,
@@ -30,13 +31,13 @@ class MainWorld(engine.Scene):
         self.PX_INTERACT_MIN_DISTANCE = 15
 
         # Map Setup
-        self.g = GameMap("data/tilemaps/house.tmx")
-        self.lightroom = engine.LightRoom(self, force_size=self.g.surface.get_size())
+        self.game_map = GameMap("data/tilemaps/house.tmx")
+        self.lightroom = engine.LightRoom(self, force_size=self.game_map.surface.get_size())
         self.light_collisions = []
 
-        self.collision_rects = self.g.collision_rects
+        self.collision_rects = self.game_map.collision_rects
 
-        for r in self.g.light_col_rects:
+        for r in self.game_map.light_col_rects:
             line = engine.rect_to_lines(r)
             self.light_collisions.extend(line)
 
@@ -56,19 +57,9 @@ class MainWorld(engine.Scene):
         self.homework_bar = engine.Bar(32, 4)
         self.night_progress = engine.Clock(pause_upon_start=False)
 
-        # Stalker Setup
-        self.stalker = Stalker()
-        self.stalker.position = pygame.Vector2(-1000, -1000)
-        self.add_entity(self.stalker)
-
-        # Sound Setup
-        WHITE_NOISE_SOUND.play(loops=-1)
-        self.footstep_clock = engine.Clock()
-        self.homework_sound_channel = None
-
         # Load Windows
         self.windows = []
-        for obj in self.g.data.objects:
+        for obj in self.game_map.data.objects:
             if obj.type and obj.visible:
                 if obj.type == "window":
                     self.windows.append(
@@ -79,7 +70,17 @@ class MainWorld(engine.Scene):
                     )
 
         # Stalker Setup
-        self.stalkerai = StalkerAI(self.windows, 2000, 0.1)
+        self.stalker = Stalker()
+        self.stalker.position = pygame.Vector2(-1000, -1000)
+        self.add_entity(self.stalker)
+
+        self.stalkerai = StalkerAI(self.windows, 2000, 0.1, self)
+        self._floor_break_surf = self.game_map.surface.copy().convert_alpha()
+
+        # Sound Setup
+        WHITE_NOISE_SOUND.play(loops=-1)
+        self.footstep_clock = engine.Clock()
+        self.homework_sound_channel = None
 
         # Font Setup
         self.font = engine.Font(
@@ -126,7 +127,7 @@ class MainWorld(engine.Scene):
 
             if event.type == pygame.MOUSEBUTTONUP:
                 # Player Interactions
-                for obj in self.g.interact_objs:
+                for obj in self.game_map.interact_objs:
                     rect = obj["rect"]
                     player_pos = self.player.center_position
                     dist = math.sqrt(
@@ -154,6 +155,20 @@ class MainWorld(engine.Scene):
                         close_window(player=self.player, rect=rect, window=w)
                         self.stalkerai.current_window = None
                         CLOSE_WINDOW_SOUND.play()
+
+    @property
+    def floor_break_surf(self) -> pygame.Surface:
+        self._floor_break_surf.fill((0, 0, 0, 0))
+        
+        for f in self.stalkerai.floor_breaks.keys():
+            data = self.stalkerai.floor_breaks[f]
+            index = data["progress"] / 100
+            self._floor_break_surf.blit(FLOOR_BREAK_TEXTURE[int(index)])
+            print(f)
+            if index >= 5:
+                print("floor broke oops")
+
+        return self._floor_break_surf
 
     def is_exposed(self):
         for w in self.windows:
@@ -198,9 +213,9 @@ class MainWorld(engine.Scene):
 
         self.player.angle = player_dir + 90
 
-        # Draw Map
-        map_surf = self.g.surface
-        map_surf_size = self.g.size
+        # Draw Map & Potential Floor Breaks
+        map_surf = self.game_map.surface
+        map_surf.blit(self.floor_break_surf, (0, 0))
         self.screen.blit(map_surf, self.camera.position)
 
         # Draw & Update Windows
@@ -212,7 +227,7 @@ class MainWorld(engine.Scene):
         self.screen.blit(self.lightroom.surface, self.camera.position)
 
         # Draw Interaction Hints
-        for obj in self.g.interact_objs:
+        for obj in self.game_map.interact_objs:
             mp = self.client.mouse_pos
             if obj["rect"].collidepoint(mp - self.camera.position):
                 t = self.font.text(obj["hint"])
