@@ -74,7 +74,7 @@ class MainWorld(engine.Scene):
         self.stalker.position = pygame.Vector2(-1000, -1000)
         self.add_entity(self.stalker)
 
-        self.stalkerai = StalkerAI(self.windows, 2000, 0.1, self)
+        self.stalkerai = StalkerAI(self.windows, 2000, 1, self)
         self._floor_break_surf = self.game_map.surface.copy().convert_alpha()
 
         # Sound Setup
@@ -160,10 +160,9 @@ class MainWorld(engine.Scene):
     def floor_break_surf(self) -> pygame.Surface:
         self._floor_break_surf.fill((0, 0, 0, 0))
         
-        for f in self.stalkerai.floor_breaks.keys():
-            data = self.stalkerai.floor_breaks[f]
-            index = data["progress"] / 100
-            self._floor_break_surf.blit(FLOOR_BREAK_TEXTURE[int(index)])
+        for f in self.stalkerai.floor_breaks:
+            index = f["progress"] / 100
+            self._floor_break_surf.blit(FLOOR_BREAK_TEXTURE[int(index)], f["pos"])
             print(f)
             if index >= 5:
                 print("floor broke oops")
