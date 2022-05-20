@@ -19,11 +19,7 @@ class GameMap:
 
         for layer in self.data.visible_tile_layers:
             layer = self.data.layers[layer]
-            for (
-                x,
-                y,
-                image,
-            ) in layer.tiles():
+            for x, y, image in layer.tiles():
                 dim = image[1]
                 img = pygame.image.load(image[0]).convert_alpha()
                 cropped_img = img.subsurface(dim)

@@ -1,6 +1,7 @@
 from typing import List
 
 import random
+from h11 import Data
 import pygame
 import SakuyaEngine as engine
 
@@ -27,17 +28,23 @@ class StalkerAI:
 
     @property
     def is_active(self) -> bool:
-        return self.current_window is None or self.current_floor_break_pos is None
+        return self.current_window is not None or self.current_floor_break_pos is not None
 
     def choose_window(self) -> Window:
         return random.choice(self.windows)
 
     def choose_floor(self) -> pygame.Vector2:
-        surf = self.scene.game_map.surface
-        x = surf.get_width() - 1
-        y = surf.get_height() - 1
+        data = self.scene.game_map.data
+        x = data.width - 1
+        y = data.height - 1
+        rand_pos = pygame.Vector2(random.randint(0, x), random.randint(0, y))
 
-        return pygame.Vector2(random.randint(0, x), random.randint(0, y))
+        for r in self.scene.collision_rects:
+            if r.collidepoint(rand_pos):
+                return                
+
+        print(rand_pos)
+        return rand_pos
 
     def open_window(self, window: Window) -> None:
         self.current_window = window
@@ -51,7 +58,7 @@ class StalkerAI:
     def update(self) -> None:
         if (
             self.cooldown_clock.get_time() >= self.choice_cooldown
-            and self.is_active
+            and not self.is_active
         ):
             self.cooldown_clock.reset()
             if self.choice_percent >= random.random():
@@ -60,7 +67,5 @@ class StalkerAI:
 
                 else:
                     self.start_floor_break(self.choose_floor())
-
-        print(self.cooldown_clock.get_time())
 
         return None

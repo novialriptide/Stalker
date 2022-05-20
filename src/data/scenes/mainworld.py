@@ -163,9 +163,9 @@ class MainWorld(engine.Scene):
         for f in self.stalkerai.floor_breaks:
             index = f["progress"] / 100
             self._floor_break_surf.blit(FLOOR_BREAK_TEXTURE[int(index)], f["pos"])
-            print(f)
             if index >= 5:
                 print("floor broke oops")
+            print(f["pos"], f["progress"])
 
         return self._floor_break_surf
 
