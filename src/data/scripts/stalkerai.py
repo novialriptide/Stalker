@@ -1,7 +1,6 @@
 from typing import List
 
 import random
-from h11 import Data
 import pygame
 import SakuyaEngine as engine
 
@@ -35,15 +34,14 @@ class StalkerAI:
 
     def choose_floor(self) -> pygame.Vector2:
         data = self.scene.game_map.data
-        x = data.width - 1
-        y = data.height - 1
-        rand_pos = pygame.Vector2(random.randint(0, x), random.randint(0, y))
+        x = (data.width - 1)
+        y = (data.height - 1)
+        rand_pos = pygame.Vector2(random.randint(0, x) * data.tilewidth, random.randint(0, y) * data.tileheight)
 
         for r in self.scene.collision_rects:
             if r.collidepoint(rand_pos):
                 return                
 
-        print(rand_pos)
         return rand_pos
 
     def open_window(self, window: Window) -> None:
@@ -52,6 +50,9 @@ class StalkerAI:
         OPEN_WINDOW_SOUND.play()
 
     def start_floor_break(self, pos: pygame.Vector2) -> None:
+        if pos is None:
+            return
+        
         self.current_floor_break_pos = pos
         self.floor_breaks.append({"progress": 0, "pos": pos})
 
@@ -68,4 +69,3 @@ class StalkerAI:
                 else:
                     self.start_floor_break(self.choose_floor())
 
-        return None

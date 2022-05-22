@@ -9,6 +9,7 @@ class GameMap:
         self.collision_rects = []
         self.light_col_rects = []
         self.interact_objs = []
+        self.stalkerai_floor_objs = []
 
         self.surface = pygame.Surface(
             (
@@ -48,6 +49,10 @@ class GameMap:
                             "cmd": obj.properties["cmd"],
                         }
                     )
+                
+                elif obj.type == "stalker_floor_rect":
+                    rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                    self.stalkerai_floor_objs.append(rect)
 
     @property
     def size(self) -> pygame.Vector2:
