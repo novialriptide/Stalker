@@ -1,13 +1,10 @@
 1. add cutscenes involving text messages
-2. add stalker entity
 3. add main menu
 4. implement pathfinding somehow for the stalker
 5. add jumpscare
-6. create player sprite
 7. add footstep trail for stalker
 8. add footstep sound fx
-9. cutscene after every night you play with your dog and at the very second last night your dog is dead
-10. make it easier to see window light
+9. cutscene after every night you play with your dog and at the very second last night your dog is dead with a msg "you need to show more love to me"
 
 
 
