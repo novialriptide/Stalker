@@ -1,4 +1,4 @@
-from data.scripts.const import RANDOM_NOISE, RANDOM_NOISE_SIZE
+from data.scripts.pygame_const import RANDOM_NOISE, RANDOM_NOISE_SIZE
 
 import random
 import SakuyaEngine as engine

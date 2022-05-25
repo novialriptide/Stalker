@@ -1,4 +1,4 @@
-from data.scripts.const import (
+from data.scripts.pygame_const import (
     FLOOR_BREAK_TEXTURE,
     FOOTSTEP1,
     KEYBOARD,
@@ -166,10 +166,14 @@ class MainWorld(engine.Scene):
 
         for f in self.stalkerai.floorbreak_manager.floors:
             index = f.progress_clock.get_time() / MAX_FLOOR_BREAK_VAL
-            self._floor_break_surf.blit(FLOOR_BREAK_TEXTURE[int(index)], f.world_pos)
-            # print(f.progress_clock.get_time())
-            if index >= 5:
-                print("floor broke oops")
+            try:
+                self._floor_break_surf.blit(
+                    FLOOR_BREAK_TEXTURE[int(index)], f.world_pos
+                )
+
+            except IndexError:
+                if index >= 5:
+                    print("floor broke oops")
 
         return self._floor_break_surf
 

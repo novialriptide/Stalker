@@ -6,7 +6,7 @@ import SakuyaEngine as engine
 from data.scripts.floorbreak_manager import FloorBreakManager
 
 from .window import Window
-from .const import OPEN_WINDOW_SOUND
+from .pygame_const import OPEN_WINDOW_SOUND
 
 
 class StalkerAI:
@@ -31,7 +31,8 @@ class StalkerAI:
     @property
     def is_active(self) -> bool:
         return (
-            self.current_window is not None or self.floorbreak_manager.current_floor is not None
+            self.current_window is not None
+            or self.floorbreak_manager.current_floor is not None
         )
 
     def choose_window(self) -> Window:
