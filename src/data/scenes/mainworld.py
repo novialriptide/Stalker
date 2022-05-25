@@ -5,6 +5,7 @@ from data.scripts.const import (
     CLOSE_WINDOW_SOUND,
     HOMEWORK_PROGRESS_SOUND,
     WHITE_NOISE_SOUND,
+    MAX_FLOOR_BREAK_VAL,
 )
 from data.scripts.controller import PlayerController
 from data.scripts.random_noise import apply_noise
@@ -23,6 +24,7 @@ import SakuyaEngine as engine
 ## stalker trioes to go through the floor to get into the house and the player needs to place a textbook ontop of
 # the floor to prevent him from getting inside. and occasionally the player needs the textbook to complete homework
 
+
 class MainWorld(engine.Scene):
     def on_awake(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
@@ -32,7 +34,9 @@ class MainWorld(engine.Scene):
 
         # Map Setup
         self.game_map = GameMap("data/tilemaps/house.tmx")
-        self.lightroom = engine.LightRoom(self, force_size=self.game_map.surface.get_size())
+        self.lightroom = engine.LightRoom(
+            self, force_size=self.game_map.surface.get_size()
+        )
         self.light_collisions = []
 
         self.collision_rects = self.game_map.collision_rects
@@ -159,11 +163,11 @@ class MainWorld(engine.Scene):
     @property
     def floor_break_surf(self) -> pygame.Surface:
         self._floor_break_surf.fill((0, 0, 0, 0))
-        
-        for f in self.stalkerai.floor_breaks:
-            index = f["progress"] / 100
-            print(f["pos"], f["progress"])
-            self._floor_break_surf.blit(FLOOR_BREAK_TEXTURE[int(index)], f["pos"])
+
+        for f in self.stalkerai.floorbreak_manager.floors:
+            index = f.progress_clock.get_time() / MAX_FLOOR_BREAK_VAL
+            self._floor_break_surf.blit(FLOOR_BREAK_TEXTURE[int(index)], f.world_pos)
+            # print(f.progress_clock.get_time())
             if index >= 5:
                 print("floor broke oops")
 

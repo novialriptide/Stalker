@@ -18,10 +18,14 @@ KEYBOARD = {
     "start": pygame.K_ESCAPE,
 }
 
+MAX_FLOOR_BREAK_VAL = 25000
+
 RANDOM_NOISE = pygame.image.load("data/sprites/random_noise.png").convert_alpha()
 RANDOM_NOISE.set_alpha(5)
 RANDOM_NOISE_SIZE = RANDOM_NOISE.get_size()
-FLOOR_BREAK_TEXTURE = engine.split_image(pygame.image.load("data/sprites/breaking_animation.png").convert_alpha(), 8, 8)
+FLOOR_BREAK_TEXTURE = engine.split_image(
+    pygame.image.load("data/sprites/breaking_animation.png").convert_alpha(), 8, 8
+)
 
 OPEN_WINDOW_SOUND = pygame.mixer.Sound("data/audio/game_window_open.mp3")
 CLOSE_WINDOW_SOUND = pygame.mixer.Sound("data/audio/game_window_close.mp3")
