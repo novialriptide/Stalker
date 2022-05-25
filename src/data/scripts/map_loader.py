@@ -49,7 +49,7 @@ class GameMap:
                             "cmd": obj.properties["cmd"],
                         }
                     )
-                
+
                 elif obj.type == "stalker_floor_rect":
                     rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
                     self.stalkerai_floor_objs.append(rect)

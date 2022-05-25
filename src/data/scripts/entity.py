@@ -3,6 +3,7 @@ from typing import List
 import pygame
 import SakuyaEngine as engine
 
+
 class Entity(engine.Entity):
     def __init__(
         self,
