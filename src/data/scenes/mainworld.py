@@ -173,14 +173,9 @@ class MainWorld(engine.Scene):
 
             except IndexError:
                 if index >= 5:
-                    print("floor broke oops")
+                    self.stalkerai.inside_house = True
 
         return self._floor_break_surf
-
-    def is_exposed(self):
-        for w in self.windows:
-            if w.display_open_percent == 1:
-                print("ur fucked lol")
 
     def update(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
@@ -188,9 +183,14 @@ class MainWorld(engine.Scene):
         self.screen.fill((0, 0, 0))
 
         # Stalker AI
-        window_choice = self.stalkerai.update()
-        if window_choice is not None:
-            print(f"open window {window_choice}")
+        self.stalkerai.update()
+        
+        ## Checks if Stalker got inside by Windows
+        ## self.floor_break_surf() checks if Stalker
+        ## got inside by floor
+        for w in self.windows:
+            if w.display_open_percent == 1:
+                self.stalkerai.inside_house = True
 
         # Camera
         self.camera.position = -self.player.center_position + screen_size / 2
@@ -289,8 +289,6 @@ class MainWorld(engine.Scene):
 
         if not self.doing_homework:
             self.homework_progress.pause()
-
-        self.is_exposed()
 
         # Footsteps
         if self.player.velocity.magnitude() > 0:

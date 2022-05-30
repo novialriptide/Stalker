@@ -17,6 +17,8 @@ class StalkerAI:
         choice_percent: float,
         scene: engine.Scene,
     ) -> None:
+        self.inside_house = False
+        
         self.windows = windows
         self.choice_cooldown = choice_cooldown
         self.choice_percent = choice_percent
