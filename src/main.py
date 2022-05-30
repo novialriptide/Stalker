@@ -19,9 +19,8 @@ from data.scenes.maintitle import MainTitle
 from data.scenes.mainworld import MainWorld
 
 scenes = [MainTitle, MainWorld]
-scene_manager = engine.SceneManager(client)
 for s in scenes:
-    scene_manager.register_scene(s)
+    client.scene_manager.register_scene(s)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--scene", type=str, help="Load a scene")
@@ -42,7 +41,7 @@ if args.scene is not None:
 else:
     client.add_scene("MainWorld")
 
-if args.rpc is None or args.rpc:
+if args.rpc is not None or args.rpc:
     try:
         rpc = pypresence.Presence(DISCORD_RPC_CLIENT_ID)
         rpc.connect()

@@ -94,7 +94,7 @@ class MainWorld(engine.Scene):
 
     def input(self) -> None:
         controller = self.controller
-        for event in pygame.event.get():
+        for event in self.events:
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.KEYDOWN:
@@ -305,17 +305,6 @@ class MainWorld(engine.Scene):
         ):
             FOOTSTEP1.play()
             self.footstep_clock.reset()
-
-        # Debug Collisions
-        if self.draw_debug_collisions:
-            for r in self.collision_rects:
-                pygame.draw.rect(self.screen, (255, 255, 0), r)
-
-            for c in self.light_collisions:
-                pygame.draw.line(self.screen, (255, 0, 0), c[0], c[1])
-
-            for w in self.windows:
-                pygame.draw.rect(self.screen, (255, 0, 0), w.rect)
 
         self.input()
         self.advance_frame()
