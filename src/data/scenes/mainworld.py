@@ -1,3 +1,4 @@
+from data.scripts.const import *
 from data.scripts.pygame_const import (
     FLOOR_BREAK_TEXTURE,
     FOOTSTEP1,
@@ -55,7 +56,6 @@ class MainWorld(engine.Scene):
         # if Vector, textbook on floor
         self.textbook_location = None
 
-        self.homework_quota = 25000
         self.doing_homework = False
         self.homework_progress = engine.Clock(pause_upon_start=True)
         self.homework_bar = engine.Bar(32, 4)
@@ -257,7 +257,7 @@ class MainWorld(engine.Scene):
 
         # Homework Progress
         prog_val = self.homework_progress.get_time()
-        homework_prog = int(prog_val * 10 / self.homework_quota)
+        homework_prog = int(prog_val * 10 / HOMEWORK_QUOTA)
         prog_text_surf = self.font.text(f"{homework_prog}")
         self.screen.blit(prog_text_surf, (0, 6))
         prog_text_surf_width = prog_text_surf.get_width()
@@ -272,7 +272,7 @@ class MainWorld(engine.Scene):
             [prog_text_surf_width + 1, 6, self.homework_bar.display_val, 5],
         )
         self.homework_bar.current_val = (
-            int(prog_val * 10 / self.homework_quota) / 100 * self.homework_bar.max_val
+            int(prog_val * 10 / HOMEWORK_QUOTA) / 100 * self.homework_bar.max_val
         )
         self.homework_bar.update(self.client.delta_time)
 
