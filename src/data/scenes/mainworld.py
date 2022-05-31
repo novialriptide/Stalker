@@ -1,11 +1,7 @@
 from data.scripts.const import *
 from data.scripts.pygame_const import (
     FLOOR_BREAK_TEXTURE,
-    FOOTSTEP1,
     KEYBOARD,
-    CLOSE_WINDOW_SOUND,
-    HOMEWORK_PROGRESS_SOUND,
-    WHITE_NOISE_SOUND,
     MAX_FLOOR_BREAK_VAL,
 )
 from data.scripts.controller import PlayerController
@@ -82,8 +78,7 @@ class MainWorld(engine.Scene):
         self._floor_break_surf = self.game_map.surface.copy().convert_alpha()
 
         # Sound Setup
-        WHITE_NOISE_SOUND.play(loops=-1)
-        self.footstep_clock = engine.Clock()
+        self.client.sounds["white_noise"].play(repeat=True)
         self.homework_sound_channel = None
 
         # Font Setup
@@ -158,7 +153,7 @@ class MainWorld(engine.Scene):
                     ):
                         close_window(player=self.player, rect=rect, window=w)
                         self.stalkerai.current_window = None
-                        CLOSE_WINDOW_SOUND.play()
+                        self.client.sounds["close_window"].play()
 
     @property
     def floor_break_surf(self) -> pygame.Surface:
@@ -281,28 +276,16 @@ class MainWorld(engine.Scene):
 
         if self.doing_homework:
             self.homework_progress.resume()
-            if (
-                self.homework_sound_channel is None
-                or not self.homework_sound_channel.get_busy()
-            ):
-                self.homework_sound_channel = HOMEWORK_PROGRESS_SOUND.play()
+            self.homework_sound_channel = self.client.sounds["homework_progress"].play(repeat=True)
 
         if not self.doing_homework:
             self.homework_progress.pause()
 
         # Footsteps
         if self.player.velocity.magnitude() > 0:
-            self.footstep_clock.resume()
+            self.client.sounds["footstep1"].play(repeat=True)
         else:
-            self.footstep_clock.pause()
-            self.footstep_clock.set_time(500)
-
-        if (
-            self.footstep_clock.get_time() > 500
-            and self.player.velocity.magnitude() > 0
-        ):
-            FOOTSTEP1.play()
-            self.footstep_clock.reset()
+            self.client.sounds["footstep1"].stop()
 
         self.input()
         self.advance_frame()

@@ -6,7 +6,6 @@ import SakuyaEngine as engine
 from data.scripts.floorbreak_manager import FloorBreakManager
 
 from .window import Window
-from .pygame_const import OPEN_WINDOW_SOUND
 
 
 class StalkerAI:
@@ -43,7 +42,6 @@ class StalkerAI:
     def open_window(self, window: Window) -> None:
         self.current_window = window
         window.open_percent = 1
-        OPEN_WINDOW_SOUND.play()
 
     def update(self) -> None:
         if (
@@ -54,6 +52,7 @@ class StalkerAI:
             if self.choice_percent >= random.random():
                 if self.window_choice_percent >= random.random():
                     self.open_window(self.choose_window())
+                    self.scene.client.sounds["open_window"].play()
 
                 else:
                     self.floorbreak_manager.choose_floor()

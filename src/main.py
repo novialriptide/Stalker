@@ -17,7 +17,9 @@ pygame.mixer.set_num_channels(64)
 
 from data.scenes.maintitle import MainTitle
 from data.scenes.mainworld import MainWorld
+from data.scripts.pygame_const import _sounds
 
+client.sounds = _sounds
 scenes = [MainTitle, MainWorld]
 for s in scenes:
     client.scene_manager.register_scene(s)
