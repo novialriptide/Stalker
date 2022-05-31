@@ -1,6 +1,7 @@
 from typing import List
 
 import random
+import logging
 import SakuyaEngine as engine
 
 from data.scripts.floorbreak_manager import FloorBreakManager
@@ -21,7 +22,7 @@ class StalkerAI:
         self.windows = windows
         self.choice_cooldown = choice_cooldown
         self.choice_percent = choice_percent
-        self.window_choice_percent = 0
+        self.window_choice_percent = 0.5
 
         self.cooldown_clock = engine.Clock()
 
@@ -50,9 +51,12 @@ class StalkerAI:
         ):
             self.cooldown_clock.reset()
             if self.choice_percent >= random.random():
+                logging.info("Stalker is choosing an action (Window/Floor)")
                 if self.window_choice_percent >= random.random():
+                    logging.info("Stalker chose window")
                     self.open_window(self.choose_window())
                     self.scene.client.sounds["open_window"].play()
 
                 else:
+                    logging.info("Stalker chose floor")
                     self.floorbreak_manager.choose_floor()

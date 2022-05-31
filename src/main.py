@@ -6,9 +6,10 @@ import SakuyaEngine as engine
 from data.scripts.const import _sounds, DISCORD_RPC_CLIENT_ID
 
 client = engine.Client(
-    f"Stay Alert",
+    "Stalker",
     pygame.Vector2(128, 112),
     mouse_image=pygame.image.load("data/sprites/mouse_pointer.png"),
+    log_dir=".novial/stalker/logs",
 )
 
 
@@ -20,9 +21,6 @@ def activate_rpc() -> None:
     except:
         print("Something went wrong starting up Discord RPC.")
 
-
-pygame.mixer.init()
-pygame.mixer.set_num_channels(64)
 
 client.sounds = _sounds
 client.scene_manager.auto_find_scenes("data/scenes")

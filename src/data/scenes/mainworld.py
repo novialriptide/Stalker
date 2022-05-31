@@ -26,9 +26,6 @@ class MainWorld(engine.Scene):
     def on_awake(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
-        self.draw_debug_collisions = False
-        self.PX_INTERACT_MIN_DISTANCE = 15
-
         # Map Setup
         self.game_map = GameMap("data/tilemaps/house.tmx")
         self.lightroom = engine.LightRoom(
@@ -74,7 +71,7 @@ class MainWorld(engine.Scene):
         self.stalker.position = pygame.Vector2(-1000, -1000)
         self.add_entity(self.stalker)
 
-        self.stalkerai = StalkerAI(self.windows, 2000, 1, self)
+        self.stalkerai = StalkerAI(self.windows, 2000, 0.2, self)
         self._floor_break_surf = self.game_map.surface.copy().convert_alpha()
 
         # Sound Setup
@@ -135,7 +132,7 @@ class MainWorld(engine.Scene):
                     )
                     if (
                         rect.collidepoint(self.client.mouse_pos - self.camera.position)
-                        and dist <= self.PX_INTERACT_MIN_DISTANCE
+                        and dist <= PX_INTERACT_MIN_DISTANCE
                     ):
                         CMDS[obj["cmd"]](player=self.player, rect=rect, scene=self)
 
@@ -148,7 +145,7 @@ class MainWorld(engine.Scene):
                     )
                     if (
                         rect.collidepoint(self.client.mouse_pos - self.camera.position)
-                        and dist <= self.PX_INTERACT_MIN_DISTANCE
+                        and dist <= PX_INTERACT_MIN_DISTANCE
                         and w.open_percent > 0
                     ):
                         close_window(player=self.player, rect=rect, window=w)
