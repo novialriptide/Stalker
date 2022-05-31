@@ -179,7 +179,7 @@ class MainWorld(engine.Scene):
 
         # Stalker AI
         self.stalkerai.update()
-        
+
         ## Checks if Stalker got inside by Windows
         ## self.floor_break_surf() checks if Stalker
         ## got inside by floor
@@ -276,7 +276,9 @@ class MainWorld(engine.Scene):
 
         if self.doing_homework:
             self.homework_progress.resume()
-            self.homework_sound_channel = self.client.sounds["homework_progress"].play(repeat=True)
+            self.homework_sound_channel = self.client.sounds["homework_progress"].play(
+                repeat=True
+            )
 
         if not self.doing_homework:
             self.homework_progress.pause()

@@ -1,10 +1,9 @@
-from data.scripts.const import DISCORD_RPC_CLIENT_ID
-
 import argparse
 import time
 import pygame
 import pypresence
 import SakuyaEngine as engine
+from data.scripts.const import _sounds, DISCORD_RPC_CLIENT_ID
 
 client = engine.Client(
     f"Stay Alert",
@@ -12,17 +11,21 @@ client = engine.Client(
     mouse_image=pygame.image.load("data/sprites/mouse_pointer.png"),
 )
 
+
+def activate_rpc() -> None:
+    try:
+        rpc = pypresence.Presence(DISCORD_RPC_CLIENT_ID)
+        rpc.connect()
+        rpc.update(start=time.time())
+    except:
+        print("Something went wrong starting up Discord RPC.")
+
+
 pygame.mixer.init()
 pygame.mixer.set_num_channels(64)
 
-from data.scenes.maintitle import MainTitle
-from data.scenes.mainworld import MainWorld
-from data.scripts.pygame_const import _sounds
-
 client.sounds = _sounds
-scenes = [MainTitle, MainWorld]
-for s in scenes:
-    client.scene_manager.register_scene(s)
+client.scene_manager.auto_find_scenes("data/scenes")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--scene", type=str, help="Load a scene")
@@ -34,7 +37,6 @@ args = parser.parse_args()
 
 client.max_fps = 60
 
-
 if args.fps is not None:
     client.max_fps = args.fps
 
@@ -43,12 +45,7 @@ if args.scene is not None:
 else:
     client.add_scene("MainWorld")
 
-if args.rpc is not None or args.rpc:
-    try:
-        rpc = pypresence.Presence(DISCORD_RPC_CLIENT_ID)
-        rpc.connect()
-        rpc.update(start=time.time())
-    except:
-        print("Something went wrong starting up Discord RPC.")
+if args.rpc is None or args.rpc:
+    activate_rpc()
 
 client.main()
