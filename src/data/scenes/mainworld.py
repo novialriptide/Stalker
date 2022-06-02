@@ -54,17 +54,23 @@ class MainWorld(engine.Scene):
         self.homework_bar = engine.Bar(32, 4)
         self.night_progress = engine.Clock(pause_upon_start=False)
 
+        self.hand = "flashlight"
+        self.inventory = {
+            "textbook": 0,
+            "planks": 0,
+            "flashlight": 1
+        }
+
         # Load Windows
         self.windows = []
         for obj in self.game_map.data.objects:
-            if obj.type and obj.visible:
-                if obj.type == "window":
-                    self.windows.append(
-                        Window(
-                            pygame.Rect(obj.x, obj.y, obj.width - 1, obj.height - 1),
-                            obj.properties["window_dir"],
-                        )
+            if obj.type and obj.visible and obj.type == "window":
+                self.windows.append(
+                    Window(
+                        pygame.Rect(obj.x, obj.y, obj.width - 1, obj.height - 1),
+                        obj.properties["window_dir"],
                     )
+                )
 
         # Stalker Setup
         self.stalker = Stalker()
@@ -83,6 +89,15 @@ class MainWorld(engine.Scene):
             alphabet_path="data/sprites/alphabet.png",
             numbers_path="data/sprites/numbers.png",
         )
+
+    def set_hand(self, item) -> bool:
+        """Returns True if the player has switched its item in its hand
+        """
+        current_hand = self.hand
+        if item in self.inventory.keys():
+            self.hand = item
+            return True
+        return False
 
     def input(self) -> None:
         controller = self.controller
