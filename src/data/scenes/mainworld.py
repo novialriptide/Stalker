@@ -3,11 +3,12 @@ from data.scripts.pygame_const import (
     FLOOR_BREAK_TEXTURE,
     KEYBOARD,
     MAX_FLOOR_BREAK_VAL,
+    TEXTBOOK_SPRITE,
 )
 from data.scripts.controller import PlayerController
 from data.scripts.random_noise import apply_noise
 from data.scripts.stalkerai import StalkerAI
-from data.scripts.map_loader import GameMap
+from data.scripts.map_loader import GameMap, world_to_tile_pos
 from data.scripts.map_cmds import *
 from data.scripts.player import Player
 from data.scripts.stalker import Stalker
@@ -54,11 +55,11 @@ class MainWorld(engine.Scene):
         self.homework_bar = engine.Bar(32, 4)
         self.night_progress = engine.Clock(pause_upon_start=False)
 
-        self.hand = "flashlight"
+        self.hand_index = 0
         self.inventory = {
+            "flashlight": 1,
             "textbook": 0,
             "planks": 0,
-            "flashlight": 1
         }
 
         # Load Windows
@@ -90,14 +91,16 @@ class MainWorld(engine.Scene):
             numbers_path="data/sprites/numbers.png",
         )
 
-    def set_hand(self, item) -> bool:
-        """Returns True if the player has switched its item in its hand
-        """
-        current_hand = self.hand
-        if item in self.inventory.keys():
-            self.hand = item
-            return True
-        return False
+    @property
+    def hand(self) -> str:
+        return list(self.inventory.keys())[self.hand_index]
+
+    def scroll_through_inventory(self):
+        if self.hand_index == len(self.inventory.keys()) - 1:
+            self.hand_index = 0
+            return
+
+        self.hand_index += 1
 
     def input(self) -> None:
         controller = self.controller
@@ -131,6 +134,9 @@ class MainWorld(engine.Scene):
 
                     if event.key == KEYBOARD["down1"]:
                         controller.is_moving_down = False
+
+                    if event.key == pygame.K_SPACE:
+                        self.scroll_through_inventory()
 
                 if event.key == KEYBOARD["select"]:
                     self.client.add_scene("Pause", exit_scene=self)
@@ -184,6 +190,13 @@ class MainWorld(engine.Scene):
 
         return self._floor_break_surf
 
+    def draw_hint(self, text) -> None:
+        screen_size = pygame.Vector2(self.client.screen.get_size())
+        t = self.font.text(text)
+        self.screen.blit(
+            t, (screen_size.x / 2 - t.get_width() / 2, screen_size.y * 2 / 3)
+        )
+
     def update(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
@@ -209,7 +222,7 @@ class MainWorld(engine.Scene):
                 self.client.mouse_pos,
             )
         )
-        if self.player.flashlight:
+        if self.player.flashlight and self.hand == "flashlight":
             self.lightroom.draw_spot_light(
                 self.player.center_position,
                 60,
@@ -218,18 +231,30 @@ class MainWorld(engine.Scene):
                 collisions=self.light_collisions,
                 color=(166, 255, 0, 25),
             )
-            self.lightroom.draw_point_light(
-                self.player.center_position,
-                15,
-                collisions=self.light_collisions,
-                color=(166, 255, 0, 25),
-            )
+        self.lightroom.draw_point_light(
+            self.player.center_position,
+            15,
+            collisions=self.light_collisions,
+            color=(166, 255, 0, 25),
+        )
 
         self.player.angle = player_dir + 90
 
-        # Draw Map & Potential Floor Breaks
-        map_surf = self.game_map.surface
+        # Draw Map, Potential Floor Breaks, & Textbook
+        map_surf = self.game_map.surface.copy()
         map_surf.blit(self.floor_break_surf, (0, 0))
+
+        if self.hand == "textbook":
+            trans_textbook_sprite = TEXTBOOK_SPRITE.copy()
+            trans_textbook_sprite.set_alpha(100)
+            textbook_place_pos = world_to_tile_pos(
+                self.player.center_position, self.game_map.data
+            )
+            map_surf.blit(
+                trans_textbook_sprite,
+                (textbook_place_pos[0] * 8, textbook_place_pos[1] * 8),
+            )
+
         self.screen.blit(map_surf, self.camera.position)
 
         # Draw & Update Windows
@@ -241,13 +266,14 @@ class MainWorld(engine.Scene):
         self.screen.blit(self.lightroom.surface, self.camera.position)
 
         # Draw Interaction Hints
-        for obj in self.game_map.interact_objs:
-            mp = self.client.mouse_pos
-            if obj["rect"].collidepoint(mp - self.camera.position):
-                t = self.font.text(obj["hint"])
-                self.screen.blit(
-                    t, (screen_size.x / 2 - t.get_width() / 2, screen_size.y * 2 / 3)
-                )
+        if self.hand not in ["textbook", "planks"]:
+            for obj in self.game_map.interact_objs:
+                mp = self.client.mouse_pos
+                if obj["rect"].collidepoint(mp - self.camera.position):
+                    self.draw_hint(obj["hint"])
+
+        if self.hand == "textbook":
+            self.draw_hint("PRESS Z TO PLACE YOUR TEXTBOOK")
 
         self.player.velocity = self.player.speed * self.controller.movement
 

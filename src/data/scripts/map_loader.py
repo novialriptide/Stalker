@@ -2,6 +2,12 @@ import pytmx
 import pygame
 
 
+def world_to_tile_pos(pos: pygame.Vector2, tiledmap: pytmx.TiledMap) -> pygame.Vector2:
+    return pygame.Vector2(
+        int(pos.x / tiledmap.tilewidth), int(pos.y / tiledmap.tileheight)
+    )
+
+
 class GameMap:
     def __init__(self, file_path: str) -> None:
         self.file_path = file_path

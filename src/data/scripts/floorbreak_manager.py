@@ -1,4 +1,5 @@
 from typing import Tuple, Union
+from .map_loader import world_to_tile_pos
 import SakuyaEngine as engine
 import pygame
 import random
@@ -9,12 +10,6 @@ def _random_rect_pos(rect: pygame.Rect) -> pygame.Vector2:
     return pygame.Vector2(
         random.randint(rect.x, rect.x + rect.width),
         random.randint(rect.y, rect.y + rect.height),
-    )
-
-
-def world_to_tile_pos(pos: pygame.Vector2, tiledmap: pytmx.TiledMap) -> pygame.Vector2:
-    return pygame.Vector2(
-        int(pos.x / tiledmap.tilewidth), int(pos.y / tiledmap.tileheight)
     )
 
 

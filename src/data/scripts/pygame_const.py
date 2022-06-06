@@ -26,3 +26,5 @@ RANDOM_NOISE_SIZE = RANDOM_NOISE.get_size()
 FLOOR_BREAK_TEXTURE = engine.split_image(
     pygame.image.load("data/sprites/breaking_animation.png").convert_alpha(), 8, 8
 )
+
+TEXTBOOK_SPRITE = pygame.image.load("data/sprites/textbook.png").convert_alpha()
