@@ -18,6 +18,8 @@ class StalkerAI:
         scene: engine.Scene,
     ) -> None:
         self.inside_house = False
+        self.spawned = False
+        self.init_pos = None
 
         self.windows = windows
         self.choice_cooldown = choice_cooldown
