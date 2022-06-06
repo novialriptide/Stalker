@@ -187,6 +187,7 @@ class MainWorld(engine.Scene):
             except IndexError:
                 if index >= 5:
                     self.stalkerai.inside_house = True
+                    self.stalkerai.init_pos = f.world_pos
 
         return self._floor_break_surf
 
@@ -210,6 +211,7 @@ class MainWorld(engine.Scene):
         ## got inside by floor
         for w in self.windows:
             if w.display_open_percent == 1:
+                self.stalkerai.init_pos = w.rect.center
                 self.stalkerai.inside_house = True
 
         # Camera
@@ -262,6 +264,10 @@ class MainWorld(engine.Scene):
             w.draw_light(self.lightroom)
             w.update(self.client.delta_time)
 
+        # Draw Entities
+        for e in self.entities:
+            self.screen.blit(e.sprite, e.abs_position + self.camera.position)
+
         # Draw LightRoom
         self.screen.blit(self.lightroom.surface, self.camera.position)
 
@@ -276,11 +282,6 @@ class MainWorld(engine.Scene):
             self.draw_hint("PRESS Z TO PLACE YOUR TEXTBOOK")
 
         self.player.velocity = self.player.speed * self.controller.movement
-
-        # Draw Entities
-        for e in self.entities:
-            self.screen.blit(e.sprite, e.abs_position + self.camera.position)
-
         apply_noise(self)
 
         # Draw Clock
@@ -326,6 +327,13 @@ class MainWorld(engine.Scene):
             self.client.sounds["footstep1"].play(repeat=True)
         else:
             self.client.sounds["footstep1"].stop()
+
+        # Activate Stalker
+        if self.stalkerai.inside_house:
+            if not self.stalkerai.spawned:
+                self.stalker.position = pygame.Vector2(self.stalkerai.init_pos)
+                self.stalkerai.spawned = True
+                self.client.sounds["white_noise"].stop()
 
         self.input()
         self.advance_frame()
