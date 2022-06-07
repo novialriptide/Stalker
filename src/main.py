@@ -8,7 +8,7 @@ from data.scripts.const import _sounds, DISCORD_RPC_CLIENT_ID
 client = engine.Client(
     "Stalker",
     pygame.Vector2(128, 112),
-    mouse_image=pygame.image.load("data/sprites/mouse_pointer.png"),
+    mouse_image=pygame.image.load(engine.resource_path("data/sprites/mouse_pointer.png")),
     log_dir=".novial/stalker/logs",
 )
 
@@ -23,7 +23,12 @@ def activate_rpc() -> None:
 
 
 client.sounds = _sounds
-client.scene_manager.auto_find_scenes("data/scenes")
+
+from data.scenes.maintitle import MainTitle
+from data.scenes.mainworld import MainWorld
+
+client.scene_manager.register_scene(MainTitle)
+client.scene_manager.register_scene(MainWorld)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--scene", type=str, help="Load a scene")

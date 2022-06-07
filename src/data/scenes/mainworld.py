@@ -28,7 +28,7 @@ class MainWorld(engine.Scene):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
         # Map Setup
-        self.game_map = GameMap("data/tilemaps/house.tmx")
+        self.game_map = GameMap(engine.resource_path("data/tilemaps/house.tmx"))
         self.lightroom = engine.LightRoom(
             self, force_size=self.game_map.surface.get_size()
         )
@@ -87,8 +87,8 @@ class MainWorld(engine.Scene):
 
         # Font Setup
         self.font = engine.Font(
-            alphabet_path="data/sprites/alphabet.png",
-            numbers_path="data/sprites/numbers.png",
+            alphabet_path=engine.resource_path("data/sprites/alphabet.png"),
+            numbers_path=engine.resource_path("data/sprites/numbers.png"),
         )
 
     @property
