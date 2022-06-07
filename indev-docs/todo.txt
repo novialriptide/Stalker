@@ -3,7 +3,6 @@
 4. implement pathfinding somehow for the stalker
 5. add jumpscare
 7. add footstep trail for stalker
-8. add footstep sound fx
 9. cutscene after every night you play with your dog and at the very second last night your dog is dead with a msg "you need to show more love to me"
 
 
