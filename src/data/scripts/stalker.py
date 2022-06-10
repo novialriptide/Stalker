@@ -11,7 +11,11 @@ class Stalker(Entity):
 
         idle = engine.Animation(
             "idle",
-            engine.split_image(pygame.image.load(engine.resource_path("data/sprites/player.png")), 10, 10),
+            engine.split_image(
+                pygame.image.load(engine.resource_path("data/sprites/player.png")),
+                10,
+                10,
+            ),
         )
         self.anim_add(idle)
         self.anim_set("idle")

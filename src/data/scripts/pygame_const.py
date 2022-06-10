@@ -20,11 +20,19 @@ KEYBOARD = {
 
 MAX_FLOOR_BREAK_VAL = 25000
 
-RANDOM_NOISE = pygame.image.load(engine.resource_path("data/sprites/random_noise.png")).convert_alpha()
+RANDOM_NOISE = pygame.image.load(
+    engine.resource_path("data/sprites/random_noise.png")
+).convert_alpha()
 RANDOM_NOISE.set_alpha(5)
 RANDOM_NOISE_SIZE = RANDOM_NOISE.get_size()
 FLOOR_BREAK_TEXTURE = engine.split_image(
-    pygame.image.load(engine.resource_path("data/sprites/breaking_animation.png")).convert_alpha(), 8, 8
+    pygame.image.load(
+        engine.resource_path("data/sprites/breaking_animation.png")
+    ).convert_alpha(),
+    8,
+    8,
 )
 
-TEXTBOOK_SPRITE = pygame.image.load(engine.resource_path("data/sprites/textbook.png")).convert_alpha()
+TEXTBOOK_SPRITE = pygame.image.load(
+    engine.resource_path("data/sprites/textbook.png")
+).convert_alpha()
