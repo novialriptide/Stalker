@@ -8,3 +8,10 @@ A pygame horror game using SakuyaEngine v3
 1. Install [SakuyaEngine](https://github.com/novialriptide/SakuyaEngine)
 2. Run `pip install requirements.txt` to install dependencies
 3. Run `src/main.py`
+
+## Package From Source (Windows)
+```
+pip install pyinstaller
+cd src
+pyinstaller stalker.spec
+```
