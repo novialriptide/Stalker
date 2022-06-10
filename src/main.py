@@ -1,14 +1,21 @@
 import argparse
 import time
+import logging
+import sys
 import pygame
 import pypresence
 import SakuyaEngine as engine
 from data.scripts.const import _sounds, DISCORD_RPC_CLIENT_ID
 
+if __name__ != "__main__":
+    sys.exit()
+
 client = engine.Client(
     "Stalker",
     pygame.Vector2(128, 112),
-    mouse_image=pygame.image.load(engine.resource_path("data/sprites/mouse_pointer.png")),
+    mouse_image=pygame.image.load(
+        engine.resource_path("data/sprites/mouse_pointer.png")
+    ),
     log_dir=".novial/stalker/logs",
 )
 
@@ -18,8 +25,12 @@ def activate_rpc() -> None:
         rpc = pypresence.Presence(DISCORD_RPC_CLIENT_ID)
         rpc.connect()
         rpc.update(start=time.time())
-    except:
-        print("Something went wrong starting up Discord RPC.")
+    except (
+        ConnectionRefusedError,
+        pypresence.exceptions.DiscordNotFound,
+        pypresence.exceptions.DiscordError,
+    ):
+        logging.error("Something went wrong starting up Discord RPC.")
 
 
 client.sounds = _sounds
@@ -49,6 +60,7 @@ else:
     client.add_scene("MainWorld")
 
 if args.rpc is None or args.rpc:
+    logging.info("Activating Discord RPC")
     activate_rpc()
 
 client.main()
