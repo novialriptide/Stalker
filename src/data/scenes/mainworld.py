@@ -98,9 +98,11 @@ class MainWorld(engine.Scene):
     def scroll_through_inventory(self):
         if self.hand_index == len(self.inventory.keys()) - 1:
             self.hand_index = 0
-            return
+        else:
+            self.hand_index += 1
 
-        self.hand_index += 1
+        if self.hand == "flashlight":
+            self.client.sounds["flashlight_on"].play()
 
     def input(self) -> None:
         controller = self.controller
@@ -144,6 +146,18 @@ class MainWorld(engine.Scene):
 
             if event.type == pygame.MOUSEBUTTONUP:
                 # Player Interactions
+                if self.hand == "textbook":
+                    floor_obj = self.stalkerai.floorbreak_manager.current_floor
+
+                    textbook_place_pos = world_to_tile_pos(
+                        self.player.center_position, self.game_map.data
+                    )
+
+                    if floor_obj is not None and floor_obj.pos == textbook_place_pos:
+                        self.stalkerai.floorbreak_manager.cancel_floor()
+                        self.client.sounds["textbook_slam"].play()
+                        self.textbook_location = textbook_place_pos
+
                 for obj in self.game_map.interact_objs:
                     rect = obj["rect"]
                     player_pos = self.player.center_position
@@ -183,7 +197,6 @@ class MainWorld(engine.Scene):
                 self._floor_break_surf.blit(
                     FLOOR_BREAK_TEXTURE[int(index)], f.world_pos
                 )
-                self.client.sounds["floor_bang"].play(repeat=True)
 
             except IndexError:
                 if index >= 5:
@@ -207,6 +220,10 @@ class MainWorld(engine.Scene):
 
         # Stalker AI
         self.stalkerai.update()
+
+        if self.stalkerai.floorbreak_manager.current_floor is not None:
+            print(self.stalkerai.floorbreak_manager.current_floor.pos)
+            self.client.sounds["floor_bang"].play(repeat=True)
 
         ## Checks if Stalker got inside by Windows
         ## self.floor_break_surf() checks if Stalker
