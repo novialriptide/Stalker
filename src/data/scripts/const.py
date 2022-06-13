@@ -21,4 +21,7 @@ _sounds = {
     "footstep1": engine.Sound(
         engine.resource_path("data/audio/game_footstep1.mp3"), cooldown=500
     ),
+    "floor_bang": engine.Sound(
+        engine.resource_path("data/audio/game_floor_bang.mp3"), cooldown=1500
+    ),
 }

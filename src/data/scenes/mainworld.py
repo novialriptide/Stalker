@@ -183,11 +183,13 @@ class MainWorld(engine.Scene):
                 self._floor_break_surf.blit(
                     FLOOR_BREAK_TEXTURE[int(index)], f.world_pos
                 )
+                self.client.sounds["floor_bang"].play(repeat=True)
 
             except IndexError:
                 if index >= 5:
                     self.stalkerai.inside_house = True
                     self.stalkerai.init_pos = f.world_pos
+                self.client.sounds["floor_bang"].stop()
 
         return self._floor_break_surf
 
