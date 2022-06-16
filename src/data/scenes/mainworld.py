@@ -1,3 +1,4 @@
+from random import random
 from data.scripts.const import *
 from data.scripts.pygame_const import (
     FLOOR_BREAK_TEXTURE,
@@ -16,6 +17,7 @@ from data.scripts.window import Window
 
 import math
 import pygame
+import random
 import sys
 import SakuyaEngine as engine
 
@@ -26,6 +28,11 @@ import SakuyaEngine as engine
 class MainWorld(engine.Scene):
     def on_awake(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
+
+        # Camera Setup
+        self.camera_offset = pygame.Vector2(0, 0)
+        self.shake_range = 5
+        self.shake_speed = 1
 
         # Map Setup
         self.game_map = GameMap(engine.resource_path("data/tilemaps/house.tmx"))
@@ -213,6 +220,12 @@ class MainWorld(engine.Scene):
             t, (screen_size.x / 2 - t.get_width() / 2, screen_size.y * 2 / 3)
         )
 
+    def shake_camera(self):
+        self.camera_offset = pygame.Vector2(
+            random.randint(-self.shake_range, self.shake_range),
+            random.randint(-self.shake_range, self.shake_range),
+        )
+
     def update(self):
         screen_size = pygame.Vector2(self.client.screen.get_size())
 
@@ -221,9 +234,11 @@ class MainWorld(engine.Scene):
         # Stalker AI
         self.stalkerai.update()
 
-        if self.stalkerai.floorbreak_manager.current_floor is not None:
-            print(self.stalkerai.floorbreak_manager.current_floor.pos)
-            self.client.sounds["floor_bang"].play(repeat=True)
+        if (
+            self.stalkerai.floorbreak_manager.current_floor is not None
+            and self.client.sounds["floor_bang"].play(repeat=True)
+        ):
+            self.shake_camera()
 
         ## Checks if Stalker got inside by Windows
         ## self.floor_break_surf() checks if Stalker
@@ -234,7 +249,12 @@ class MainWorld(engine.Scene):
                 self.stalkerai.inside_house = True
 
         # Camera
-        self.camera.position = -self.player.center_position + screen_size / 2
+        self.camera_offset.move_towards_ip(
+            (0, 0), self.shake_speed * self.client.delta_time
+        )
+        self.camera.position = (
+            -self.player.center_position + screen_size / 2 + self.camera_offset
+        )
 
         # Draw Player Flashlight
         player_dir = math.degrees(
