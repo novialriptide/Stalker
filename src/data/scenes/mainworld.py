@@ -65,7 +65,7 @@ class MainWorld(engine.Scene):
         self.hand_index = 0
         self.inventory = {
             "flashlight": 1,
-            "textbook": 0,
+            "textbook": 1,
             "planks": 0,
         }
 
@@ -153,7 +153,7 @@ class MainWorld(engine.Scene):
 
             if event.type == pygame.MOUSEBUTTONUP:
                 # Player Interactions
-                if self.hand == "textbook":
+                if self.hand == "textbook" and self.inventory["textbook"] > 0:
                     floor_obj = self.stalkerai.floorbreak_manager.current_floor
 
                     textbook_place_pos = world_to_tile_pos(
@@ -162,8 +162,21 @@ class MainWorld(engine.Scene):
 
                     if floor_obj is not None and floor_obj.pos == textbook_place_pos:
                         self.stalkerai.floorbreak_manager.cancel_floor()
-                        self.client.sounds["textbook_slam"].play()
-                        self.textbook_location = textbook_place_pos
+
+                    self.client.sounds["textbook_slam"].play()
+                    self.textbook_location = textbook_place_pos
+                    self.inventory["textbook"] = 0
+
+                elif self.hand == "textbook" and self.inventory["textbook"] == 0:
+                    floor_obj = self.stalkerai.floorbreak_manager.current_floor
+
+                    textbook_pos = world_to_tile_pos(
+                        self.player.center_position, self.game_map.data
+                    )
+
+                    if self.textbook_location == textbook_pos:
+                        self.inventory["textbook"] = 1
+                        self.textbook_location = None
 
                 for obj in self.game_map.interact_objs:
                     rect = obj["rect"]
@@ -210,6 +223,10 @@ class MainWorld(engine.Scene):
                     self.stalkerai.inside_house = True
                     self.stalkerai.init_pos = f.world_pos
                 self.client.sounds["floor_bang"].stop()
+
+        if self.textbook_location is not None:
+            print(self.textbook_location * 8)
+            self._floor_break_surf.blit(TEXTBOOK_SPRITE, self.textbook_location * 8)
 
         return self._floor_break_surf
 
@@ -285,7 +302,7 @@ class MainWorld(engine.Scene):
         map_surf = self.game_map.surface.copy()
         map_surf.blit(self.floor_break_surf, (0, 0))
 
-        if self.hand == "textbook":
+        if self.hand == "textbook" and self.inventory["textbook"] > 0:
             trans_textbook_sprite = TEXTBOOK_SPRITE.copy()
             trans_textbook_sprite.set_alpha(100)
             textbook_place_pos = world_to_tile_pos(
