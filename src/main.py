@@ -42,7 +42,7 @@ client.scene_manager.register_scene(MainTitle)
 client.scene_manager.register_scene(MainWorld)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--scene", type=str, help="Load a scene", default="MainWorld")
+parser.add_argument("--scene", type=str, help="Load a scene", default="MainTitle")
 parser.add_argument("--fps", type=int, help="Set the game fps", default=60)
 parser.add_argument(
     "--no-rpc", help="Disables Discord RPC", action=argparse.BooleanOptionalAction
