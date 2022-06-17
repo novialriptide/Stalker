@@ -36,3 +36,7 @@ FLOOR_BREAK_TEXTURE = engine.split_image(
 TEXTBOOK_SPRITE = pygame.image.load(
     engine.resource_path("data/sprites/textbook.png")
 ).convert_alpha()
+
+BACKGROUND_SPRITE = pygame.image.load(
+    engine.resource_path("data/sprites/background.png")
+).convert_alpha()
