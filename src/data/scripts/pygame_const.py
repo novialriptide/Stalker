@@ -38,5 +38,5 @@ TEXTBOOK_SPRITE = pygame.image.load(
 ).convert_alpha()
 
 BACKGROUND_SPRITE = pygame.image.load(
-    engine.resource_path("data/sprites/background.png")
+    engine.resource_path("data/sprites/title_bg.png")
 ).convert_alpha()
