@@ -15,3 +15,9 @@ pip install pyinstaller
 cd src
 pyinstaller stalker.spec
 ```
+
+## Credits
+ - Programming by Novial
+ - Sprites by Novial
+ - Audio by https://freesound.org/
+ - Title Screen Background by teriyakinoodlez
