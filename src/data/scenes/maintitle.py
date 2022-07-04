@@ -5,9 +5,9 @@ import math
 from data.scripts.pygame_const import BACKGROUND_SPRITE
 
 """
-Your mother has left home and you have homework you must complete by 6AM.
-There is a slight problem, someone is trying to get inside your home.
-Keep them out.
+Your mother has left home and someone's trying to enter your home.
+Defend your home until the police arrive. Play video games to pass
+the time faster.
 """
 
 
