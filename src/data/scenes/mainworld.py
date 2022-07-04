@@ -387,7 +387,7 @@ class MainWorld(engine.Scene):
         # Activate Stalker
         if self.stalkerai.inside_house:
             if not self.stalkerai.spawned:
-                self.stalker.position = pygame.Vector2(self.stalkerai.init_pos)
+                # self.stalker.position = pygame.Vector2(self.stalkerai.init_pos)
                 self.stalkerai.spawned = True
                 self.client.sounds["white_noise"].stop()
 
